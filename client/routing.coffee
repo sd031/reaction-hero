@@ -1,3 +1,7 @@
 Router.map ->
   @route "hero",
-      controller: ShopController
+    controller: ShopController
+    path: 'dashboard/settings/hero',
+    template: 'hero'
+    waitOn: ->
+      PackagesHandle

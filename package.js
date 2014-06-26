@@ -1,21 +1,33 @@
 Package.describe({
-  summary: "Reaction Hero - dude"
+  summary: "Reaction Hero - Hero Carousels"
 });
 
 Package.on_use(function (api, where) {
   api.use([
     "standard-app-packages",
-    "coffeescript"
+    "coffeescript",
+    "underscore",
+    "simple-schema",
+    "autoform"
   ], ["client", "server"]);
+
   api.use([
     "iron-router",
     "less",
     "reaction-core"
   ], ["client"]);
 
+  api.add_files("common/collections.coffee",["client","server"]);
+  api.add_files("server/publications.coffee",["server"]);
+  api.add_files("server/methods/heros/methods.coffee",["server"]);
   api.add_files([
-    "client/register.coffee",
+    "client/subscriptions.coffee",
+    "client/helpers/helpers.coffee",
     "client/routing.coffee",
+
+    "client/templates/hero/manager/manager.html",
+    "client/templates/hero/manager/manager.coffee",
+    "client/templates/hero/manager/manager.less",
 
     "client/templates/hero/hero.html",
     "client/templates/hero/hero.coffee",

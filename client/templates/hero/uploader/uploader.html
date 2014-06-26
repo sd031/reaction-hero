@@ -1,0 +1,8 @@
+<template name="heroUploader">
+{{#if userHasRole "admin"}}
+<div id="dropzone" class="dropzone">
+  <input name="files" id="files" class="hidden" type="file" multiple/>
+  <div class="btn btn-default btn-block" id="btn-upload">Drop file to Create a new Hero</div>
+</div>
+{{/if}}
+</template>

@@ -1,54 +1,7 @@
 <template name="hero">
 <div class="hero-manager">
-
   <h1>{{title}}</h1>
   <p>{{description}}</p>
-
-  <div id="hero-carousel" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-    </ol>
-
-    <div class="carousel-inner">
-      <div class="item active">
-        <img src="//placekitten.com/g/400/150" alt="one">
-        <div class="carousel-caption">
-          one
-        </div>
-      </div>
-      <div class="item">
-        <img src="//placekitten.com/g/400/150" alt="two">
-        <div class="carousel-caption">
-          two
-        </div>
-      </div>
-      <div class="item">
-        <img src="//placekitten.com/g/400/150" alt="three">
-        <div class="carousel-caption">
-          three
-        </div>
-      </div>
-    </div>
-
-    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-    </a>
-    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
-  </div>
-
-  {{>heroUploader}}
+  {{>heroManager}}
 </div>
-</template>
-
-<template name="heroUploader">
-{{#if userHasRole "admin"}}
-<div id="dropzone" class="dropzone">
-  <input name="files" id="files" class="hidden" type="file" multiple/>
-  <div class="btn btn-default btn-block" id="btn-upload">Drop file to upload</div>
-</div>
-{{/if}}
 </template>

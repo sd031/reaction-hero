@@ -6,5 +6,5 @@ Meteor.app.packages.register(
   overviewRoute: "hero"
   template: "hero"
   hasWidget: true
-  priority: "2"
+  priority: "1"
 )
