@@ -9,9 +9,10 @@ Meteor.methods
     unless Roles.userIsInRole(Meteor.userId(), ['admin'])
       return false
 
+    count = Heros.find().count() + 1
     heroId = Heros._collection.insert({
                               _id: Random.id()
-                              name: "Test Hero"
+                              name: "Hero " + count
                               shopId: Meteor.app.getCurrentShop()._id
                               slides: []
                             })
