@@ -2,4 +2,4 @@ Template.hero.title = ->
   "Hero Manager"
 
 Template.hero.description = ->
-  "A Hero Manager for Reaction."
+  "Create and manage Hero Carousels for Reaction Commerce."

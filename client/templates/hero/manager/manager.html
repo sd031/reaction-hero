@@ -1,19 +1,18 @@
 <template name="heroManager">
 <div class="hero-manager">
-  <div class="dropdown-apps-icon">
-    <a id="add-hero-link" alt="Add Hero Carousel"><i class="add-hero-link fa fa-plus"></i></a>
+  
+  <a id="add-hero-link" alt="Add Hero Carousel"><i class="add-hero-link fa fa-plus"></i></a>
+  <span class="icon-text">Create a New Hero Carousel</span>
 
+  <h3>Heros</h3>
+  <ul>
+  {{#each heros}}
+    <li><a href="">{{name}}</a></li>
+  {{/each}}
+  </ul>
+       
+  
 
-    <span class="icon-text">Create a New Hero Carousel</span>
-
-    <h4>Edit</h4>
-    <ul>
-    {{#each heros}}
-        <li><a href="">{{name}}</a></li>
-    {{/each}}
-    </ul>
-
-  </div>
 </div>
 </template>
 
