@@ -4,9 +4,8 @@
     optional: true
   uri:
     type: String
+    optional: true
   title:
-    type: String
-  assetId:
     type: String
     optional: true
 

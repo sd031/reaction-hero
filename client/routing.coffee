@@ -5,3 +5,9 @@ Router.map ->
     template: 'hero'
     waitOn: ->
       PackagesHandle
+  @route "herodemo",
+    controller: ShopController
+    path: 'hero/demo',
+    template: 'herodemo'
+    waitOn: ->
+      PackagesHandle

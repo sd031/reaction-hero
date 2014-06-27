@@ -28,3 +28,8 @@ Meteor.methods
 
     slide.id = Random.id()
     Heros.update(heroId, {$addToSet:{"slides": slide}})
+
+  updateHeroSlide: (heroId, slide) ->
+    # only admins can create hero slides
+    unless Roles.userIsInRole(Meteor.userId(), ['admin'])
+      return false

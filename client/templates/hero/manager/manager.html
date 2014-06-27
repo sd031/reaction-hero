@@ -1,15 +1,17 @@
 <template name="heroManager">
 <div class="hero-manager">
   
-  <a id="add-hero-link" alt="Add Hero Carousel"><i class="add-hero-link fa fa-plus"></i></a>
-  <span class="icon-text">Create a New Hero Carousel</span>
+  <a id="add-hero-link" alt="Add Hero Carousel">
+    <i class="add-hero-link fa fa-plus"></i>
+    <span class="icon-text">Create a New Hero Carousel</span>
+  </a>
 
   <h3>Heros</h3>
   <ul>
   {{#each heros}}
     <li>
-      <a class="hero-edit" data-idx="{{_id}}">{{name}}</a>
-      <div class="well" style="">
+      <a class="hero-edit" data-heroidx="{{_id}}">{{name}}</a>
+      <div class="well" data-heroidx="{{_id}}" style="display:none;">
         {{> updateHeroForm }} 
       </div>
     </li>
@@ -20,10 +22,16 @@
 
 <template name="updateHeroForm">
 <fieldset>
-    {{#autoForm collection="Heros" doc=heroDoc type="update" validation="keyup" resetOnSuccess="false"}}
+    {{#autoForm collection="Heros" doc=heroDoc type="update" validation="keyup" id="_id" resetOnSuccess="false"}}
     <div class="form-group">
-        <button type="submit" id="update-hero" class="btn btn-primary">Update</button>
-        {{> afDeleteButton collection="Heros" doc=heroDoc}}
+        <div class="row">
+            <div class="col-xs-1">
+                <button type="submit" id="update-hero" class="btn btn-primary">Update</button>
+            </div>
+            <div class="col-xs-1">
+                {{> afDeleteButton collection="Heros" doc=heroDoc}}
+            </div>
+        </div>
     </div>
     <div class="form-group">
         {{>afFieldLabel name='name'}}
@@ -35,47 +43,23 @@
     {{/autoForm}}
 
     <div class="form-group">
-
-       <div class="well">
-         {{#autoForm collection="Heros" schema="HeroSlideSchema" doc=. type="insert" id=_id type="method" meteormethod="createHeroSlide" validation="keyup" resetOnSuccess="true"}}
-         <fieldset>
-           <legend>Add a new Slide</legend>
-           <div class="row">
-              <div class="col-xs-12">
-                <fieldset>
-                  {{>afFieldLabel name='title'}}
-                  {{>afFieldInput name='title'}}
-                  {{#if afFieldIsInvalid name='title'}}
-                      <span class="help-block">{{afFieldMessage name='title'}}</span>
-                  {{/if}}
-
-                  {{>afFieldLabel name='uri'}}
-                  {{>afFieldInput name='uri'}}
-                  {{#if afFieldIsInvalid name='uri'}}
-                      <span class="help-block">{{afFieldMessage name='uri'}}</span>
-                  {{/if}}
-
-                  <button type="submit" id="add-hero-slide" class="btn btn-primary">Add</button>
-                </fieldset>
-              </div>
-           </div>
-         </fieldset>
-         {{/autoForm}}
-       </div>
+        <a id="add-hero-slide" alt="Add a new Slide">
+            <i class="fa fa-plus"></i>
+            <span class="icon-text">Create a New Slide</span>
+        </a>
 
         <ol class="heroSlides">
 
             {{#each slides}}
             <li>
                 <div class="well">
-                    {{#autoForm schema="HeroSlideSchema" doc=. type="update" id=_id validation="keyup" resetOnSuccess="false"}}
+                    {{#autoForm collection="Heros" schema="HeroSlideSchema" doc=. type="method" meteormethod="updateHeroSlide" id=id resetOnSuccess="false"}}
                     <fieldset>
                         <div class="row">
                             <div class="col-xs-6">
                                 {{#with media}}
                                   <div class="center-cropped" style="background-image: url('{{url}}');">
                                     <img src="{{url}}" class="product-grid-item-images img-responsive">
-                                    <!--<a class="image-remove-link" data-index="{{id}}"><i class="remove-image fa fa-times-circle fa-2x"></i></a>-->
                                   </div>
                                 {{else}}
                                   {{>heroImageUpload idx=id}}
@@ -83,18 +67,21 @@
                             </div>
                             <div class="col-xs-6">
                                 <fieldset>
-                                {{>afFieldLabel name='title'}}
-                                {{>afFieldInput name='title'}}
-                                {{#if afFieldIsInvalid name='title'}}
-                                    <span class="help-block">{{afFieldMessage name='title'}}</span>
-                                {{/if}}
+                                    {{>afFieldLabel name='title'}}
+                                    {{>afFieldInput name='title'}}
+                                    {{#if afFieldIsInvalid name='title'}}
+                                        <span class="help-block">{{afFieldMessage name='title'}}</span>
+                                    {{/if}}
 
-                                {{>afFieldLabel name='uri'}}
-                                {{>afFieldInput name='uri'}}
-                                {{#if afFieldIsInvalid name='uri'}}
-                                    <span class="help-block">{{afFieldMessage name='uri'}}</span>
-                                {{/if}}
+                                    {{>afFieldLabel name='uri'}}
+                                    {{>afFieldInput name='uri'}}
+                                    {{#if afFieldIsInvalid name='uri'}}
+                                        <span class="help-block">{{afFieldMessage name='uri'}}</span>
+                                    {{/if}}
 
+                                    {{>afFieldInput name="id" type="hidden"}}
+
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                 </fieldset>
                             </div>
                         </div>

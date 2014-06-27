@@ -1,8 +1,3 @@
-Template.heroManager.rendered = ->
-  # delete this after dev
-  hero = Heros.findOne()
-  Session.set 'selectedHeroIdx', hero._id
-
 Template.heroManager.helpers
   heros: ->
     selector = {}
@@ -18,8 +13,8 @@ Template.heroManager.events
   "click .hero-edit": (event, template) ->
     event.preventDefault()
     event.stopPropagation()
-    Session.set 'selectedHeroIdx', $(event.currentTarget).data('idx')
-    $(event.currentTarget).parent().find('.well').toggle()
+    Session.set 'selectedHeroIdx', $(event.currentTarget).data('heroidx')
+    $('.well[data-heroidx=' + $(event.currentTarget).data('heroidx') + ']').toggle()
 
 Template.updateHeroForm.heroDoc = ->
   selectedHeroIdx = Session.get "selectedHeroIdx"
@@ -38,8 +33,8 @@ Template.updateHeroForm.events
     event.stopPropagation()
     selectedHeroIdx = Session.get "selectedHeroIdx"
 
-    slideTitle = $(event.currentTarget).parent().find('input[name=title]').val()
-    slideUri = $(event.currentTarget).parent().find('input[name=uri]').val()
+    slideTitle = ''
+    slideUri = ''
     slide = {title: slideTitle, uri: slideUri}
 
     if selectedHeroIdx
