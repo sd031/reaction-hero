@@ -1,6 +1,4 @@
 HeroSlideSchema = new SimpleSchema
-  heroId:
-    type: String
   uri:
     type: String
   title:
@@ -14,6 +12,7 @@ HeroSlideSchema = new SimpleSchema
       type: String
     slides:
       type: [HeroSlideSchema]
+      optional: true
 
 Heros = @Heros
 
