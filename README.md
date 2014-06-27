@@ -10,6 +10,7 @@ Clone to reaction/packages then add package to local meteor server:
 
 
 # TODOs
+* Figure out why the widget won't show up in the Dashboard App Store
 * Update Hero Slides using the Admin
 * Scale and fix Hero Slide images on upload
 * Create a preview Bootstrap Carousel to display the Hero Slides
