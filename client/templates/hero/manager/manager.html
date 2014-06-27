@@ -9,8 +9,8 @@
   {{#each heros}}
     <li>
       <a class="hero-edit" data-idx="{{_id}}">{{name}}</a>
-      <div class="well" style="display:none;">
-        {{> updateHeroForm }}       
+      <div class="well" style="">
+        {{> updateHeroForm }} 
       </div>
     </li>
   {{/each}}
@@ -20,12 +20,104 @@
 </template>
 
 <template name="updateHeroForm">
-{{#autoForm collection="Heros" id="updateHeroForm" type="update" doc=editingDoc}}
-    <fieldset>
-        {{> afQuickField name='name'}}
-        {{> afQuickField name='slides'}}
-    </fieldset>
-    <button type="submit" class="btn btn-primary">Update</button>
-{{/autoForm}}
-{{> afDeleteButton collection="Heros" doc=editingDoc}}
+<fieldset>
+    {{#autoForm collection="Heros" doc=heroDoc type="update" validation="keyup" resetOnSuccess="false"}}
+    <div class="form-group">
+        <button type="submit" id="update-hero" class="btn btn-primary">Update</button>
+        {{> afDeleteButton collection="Heros" doc=heroDoc}}
+    </div>
+    <div class="form-group">
+        {{>afFieldLabel name='name'}}
+        {{>afFieldInput name='name'}}
+        {{#if afFieldIsInvalid name='name'}}
+            <span class="help-block">{{afFieldMessage name='name'}}</span>
+        {{/if}}
+    </div>
+    {{/autoForm}}
+
+    <div class="form-group">
+
+       <div class="well">
+         {{#autoForm collection="Heros" schema="HeroSlideSchema" doc=. type="insert" id=_id type="method" meteormethod="createHeroSlide" validation="keyup" resetOnSuccess="true"}}
+         <fieldset>
+           <legend>Add a new Slide</legend>
+           <div class="row">
+              <!-- 
+              <div class="col-xs-6">
+                  {{>heroImageUpload}}
+              </div>
+              -->
+              <div class="col-xs-12">
+                <fieldset>
+                  {{>afFieldLabel name='title'}}
+                  {{>afFieldInput name='title'}}
+                  {{#if afFieldIsInvalid name='title'}}
+                      <span class="help-block">{{afFieldMessage name='title'}}</span>
+                  {{/if}}
+
+                  {{>afFieldLabel name='uri'}}
+                  {{>afFieldInput name='uri'}}
+                  {{#if afFieldIsInvalid name='uri'}}
+                      <span class="help-block">{{afFieldMessage name='uri'}}</span>
+                  {{/if}}
+
+                  <button type="submit" id="add-hero-slide" class="btn btn-primary">Add</button>
+                </fieldset>
+              </div>
+           </div>
+         </fieldset>
+         {{/autoForm}}
+       </div>
+
+        <ol>
+
+            {{#each slides}}
+            <li>
+                <div class="well">
+                    {{#autoForm schema="HeroSlideSchema" doc=. type="update" id=_id validation="keyup" resetOnSuccess="false"}}
+                    <fieldset>
+                        <div class="row" data-slideIdx="{{id}}">
+                            <div class="col-xs-6">
+                                {{#with media}}
+                                  <div class="center-cropped" style="background-image: url('{{url}}');">
+                                    <img src="{{url}}" class="product-grid-item-images img-responsive">
+                                  </div>
+                                {{/with}}
+                                {{>heroImageUpload}}
+                            </div>
+                            <div class="col-xs-6">
+                                <fieldset>
+                                {{>afFieldLabel name='title'}}
+                                {{>afFieldInput name='title'}}
+                                {{#if afFieldIsInvalid name='title'}}
+                                    <span class="help-block">{{afFieldMessage name='title'}}</span>
+                                {{/if}}
+
+                                {{>afFieldLabel name='uri'}}
+                                {{>afFieldInput name='uri'}}
+                                {{#if afFieldIsInvalid name='uri'}}
+                                    <span class="help-block">{{afFieldMessage name='uri'}}</span>
+                                {{/if}}
+
+                                </fieldset>
+                            </div>
+                        </div>
+                    </fieldset>
+                    {{/autoForm}}
+                </div>
+            </li>
+            {{/each}}
+
+        </ol>
+
+    </div>
+
+</fieldset>
+</template>
+
+<template name="heroImageUpload">
+<div id="dropzone" class="dropzone">
+    <input name="files" id="files" class="hidden" type="file" multiple/>
+    <div class="btn btn-default btn-block" id="btn-upload">Drop file to Upload</div>
+</div>
 </template>
