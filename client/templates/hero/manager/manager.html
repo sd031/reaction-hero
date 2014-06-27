@@ -7,12 +7,25 @@
   <h3>Heros</h3>
   <ul>
   {{#each heros}}
-    <li><a href="">{{name}}</a></li>
+    <li>
+      <a class="hero-edit" data-idx="{{_id}}">{{name}}</a>
+      <div class="well" style="display:none;">
+        {{> updateHeroForm }}       
+      </div>
+    </li>
   {{/each}}
   </ul>
        
-  
 
 </div>
 </template>
 
+<template name="updateHeroForm">
+{{#autoForm collection="Heros" id="updateHeroForm" type="update" doc=editingDoc}}
+    <fieldset>
+        {{> afQuickField name='name'}}
+        {{> afQuickField name='slides'}}
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Update</button>
+{{/autoForm}}
+</template>
