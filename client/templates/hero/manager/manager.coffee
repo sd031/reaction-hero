@@ -46,6 +46,16 @@ Template.updateHeroForm.events
       Meteor.call "createHeroSlide", selectedHeroIdx, slide, (error, slideId) ->
         console.log error if error
 
+Template.updateHeroForm.rendered = ->
+
+  $slides = $(".heroSlides")
+  $slides.sortable
+    cursor: "move"
+    opacity: 0.3
+    placeholder: "sortable"
+    forcePlaceholderSize: true
+    update: (event, ui) ->
+
 AutoForm.hooks updateHeroForm:
   onSuccess: (operation, result, template) ->
     Alerts.add "saved.", "success"

@@ -63,7 +63,7 @@
          {{/autoForm}}
        </div>
 
-        <ol>
+        <ol class="heroSlides">
 
             {{#each slides}}
             <li>
@@ -75,7 +75,7 @@
                                 {{#with media}}
                                   <div class="center-cropped" style="background-image: url('{{url}}');">
                                     <img src="{{url}}" class="product-grid-item-images img-responsive">
-                                    <a class="image-remove-link" data-index="{{id}}"><i class="remove-image fa fa-times-circle fa-2x"></i></a>
+                                    <!--<a class="image-remove-link" data-index="{{id}}"><i class="remove-image fa fa-times-circle fa-2x"></i></a>-->
                                   </div>
                                 {{else}}
                                   {{>heroImageUpload idx=id}}
