@@ -16,7 +16,6 @@ Meteor.methods
                               shopId: Meteor.app.getCurrentShop()._id
                               slides: []
                             })
-
   ###
   # createHeroSlide
   #
@@ -27,3 +26,5 @@ Meteor.methods
     unless Roles.userIsInRole(Meteor.userId(), ['admin'])
       return false
 
+    slide.id = Random.id()
+    Heros.update(heroId, {$addToSet:{"slides": slide}})

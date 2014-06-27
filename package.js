@@ -22,7 +22,6 @@ Package.on_use(function (api, where) {
   api.add_files("server/methods/heros/methods.coffee",["server"]);
   api.add_files([
     "client/subscriptions.coffee",
-    "client/helpers/helpers.coffee",
     "client/routing.coffee",
 
     "client/templates/hero/manager/manager.html",
