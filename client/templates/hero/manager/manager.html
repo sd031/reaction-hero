@@ -15,7 +15,6 @@
     </li>
   {{/each}}
   </ul>
-       
 </div>
 </template>
 
@@ -42,11 +41,6 @@
          <fieldset>
            <legend>Add a new Slide</legend>
            <div class="row">
-              <!-- 
-              <div class="col-xs-6">
-                  {{>heroImageUpload}}
-              </div>
-              -->
               <div class="col-xs-12">
                 <fieldset>
                   {{>afFieldLabel name='title'}}
@@ -76,14 +70,16 @@
                 <div class="well">
                     {{#autoForm schema="HeroSlideSchema" doc=. type="update" id=_id validation="keyup" resetOnSuccess="false"}}
                     <fieldset>
-                        <div class="row" data-slideIdx="{{id}}">
+                        <div class="row">
                             <div class="col-xs-6">
                                 {{#with media}}
                                   <div class="center-cropped" style="background-image: url('{{url}}');">
                                     <img src="{{url}}" class="product-grid-item-images img-responsive">
+                                    <a class="image-remove-link" data-index="{{id}}"><i class="remove-image fa fa-times-circle fa-2x"></i></a>
                                   </div>
+                                {{else}}
+                                  {{>heroImageUpload idx=id}}
                                 {{/with}}
-                                {{>heroImageUpload}}
                             </div>
                             <div class="col-xs-6">
                                 <fieldset>

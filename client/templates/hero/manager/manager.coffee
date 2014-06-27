@@ -59,8 +59,7 @@ Template.heroImageUpload.events
 
   "change #files": (event, template) ->
     selectedHeroIdx = Session.get "selectedHeroIdx"
-    slideId = $(event.currentTarget).parent().parent().parent().data('slideidx')
-    console.log slideId
+    slideId = template.data.idx
     FS.Utility.eachFile event, (file, selectedHeroIdx, slideIdx) ->
       fileObj = new FS.File(file)
       fileObj.metadata =
@@ -72,7 +71,7 @@ Template.heroImageUpload.events
 
   "dropped #dropzone": (event, template) ->
     selectedHeroIdx = Session.get "selectedHeroIdx"
-    slideId = $(event.currentTarget).parent().parent().parent().data('slideidx')
+    slideId = template.data.idx
     if selectedHeroIdx
       FS.Utility.eachFile event, (file, selectedHeroIdx, slideIdx) ->
         fileObj = new FS.File(file)

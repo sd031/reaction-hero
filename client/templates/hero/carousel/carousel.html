@@ -1,0 +1,37 @@
+<template name="heroPreview">
+{{#each hero}}
+<div id="carousel_{{_id}}" class="carousel slide">
+  <ol class="carousel-indicators">
+    {{#each slides}}
+    <li data-target="carousel_{{_id}}" data-slide-to="{{index}}" class="active"></li>
+    {{/each}}
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+
+    {{#each slides}}
+    <div class="item">
+      {{#with media}}
+        <img src="{{url}}" class="product-grid-item-images img-responsive" style="min-height:100px; min-width:100px;">
+      {{else}}
+        <img src="/resources/placeholder.gif" alt="">
+      {{/with}}
+
+      <div class="carousel-caption">
+      </div>
+    </div>
+    {{/each}}
+
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="carousel_{{_id}}" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="carousel_{{_id}}" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div>
+{{/each}}
+</template>
