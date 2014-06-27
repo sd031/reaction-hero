@@ -1,3 +1,3 @@
-# Hero - Reaction Package
+reaction-hero
 
-Reaction Commerce Hero Manager
+Hero Manager Package
