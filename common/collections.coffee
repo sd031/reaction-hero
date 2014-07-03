@@ -23,6 +23,8 @@ HeroSlideSchema = @HeroSlideSchema
     updatedAt:
       type: Date
       optional: true
+    showChevrons:
+      type: Boolean
     slides:
       type: [HeroSlideSchema]
       optional: true
