@@ -1,38 +1,40 @@
 <template name="herodemo">
   <h1>Hero Demo</h1>
+
   {{#each heros}}
-    <div id="carousel_{{_id}}" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="carousel_{{_id}}" data-slide-to="0" class="active"></li>
-        <li data-target="carousel_{{_id}}" data-slide-to="1"></li>
-        <li data-target="carousel_{{_id}}" data-slide-to="2"></li>
-      </ol>
-    
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner">
-    
-        {{#each slides}}
-        <div class="item">
-          {{#with media}}
-            <img src="{{url}}" class="product-grid-item-images img-responsive">
-          {{else}}
-            <img src="/resources/placeholder.gif" alt="">
-          {{/with}}
-    
-          <div class="carousel-caption">
-          </div>
+  <div id="carousel" class="carousel slide">
+
+    <ol class="carousel-indicators">
+      {{#each slides}}
+      <li data-target="#carousel"></li>
+      {{/each}}
+    </ol>
+
+    <div class="carousel-inner">
+    {{#each slides}}
+    <div class="item">
+            {{#with media}}
+            <div class="center-cropped" style="background-image: url('{{url}}');">
+                <img src="{{url}}" class="product-grid-item-images img-responsive">
+            </div>
+            {{else}}
+            <img src="http://placekitten.com/200/300" alt="">
+            {{/with}}
+
+            <div class="carousel-caption">{{idx}}
+            </div>
         </div>
-        {{/each}}
-    
-      </div>
-    
-      <!-- Controls -->
-      <a class="left carousel-control" href="carousel_{{_id}}" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-      </a>
-      <a class="right carousel-control" href="carousel_{{_id}}" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-      </a>
+    {{/each}}
     </div>
+
+    <a class="left carousel-control" href="carousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="carousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+
+  </div>
   {{/each}}
+
 </template>
