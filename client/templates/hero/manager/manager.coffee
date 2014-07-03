@@ -41,6 +41,22 @@ Template.updateHeroForm.events
       Meteor.call "createHeroSlide", selectedHeroIdx, slide, (error, slideId) ->
         console.log error if error
 
+  "click .update-hero-slide": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+    selectedHeroIdx = Session.get "selectedHeroIdx"
+    if selectedHeroIdx
+      Meteor.call "updateHeroSlide", selectedHeroIdx, $(event.currentTarget).data('idx'), (error, slideId) ->
+        console.log error if error
+
+  "click .delete-hero-slide": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+    selectedHeroIdx = Session.get "selectedHeroIdx"
+    if selectedHeroIdx
+      Meteor.call "deleteHeroSlide", selectedHeroIdx, $(event.currentTarget).data('idx'), (error, slideId) ->
+        console.log error if error
+
 Template.updateHeroForm.rendered = ->
 
   $slides = $(".heroSlides")
