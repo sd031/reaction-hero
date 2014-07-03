@@ -33,7 +33,19 @@ Meteor.methods
     # only admins can create hero slides
     unless Roles.userIsInRole(Meteor.userId(), ['admin'])
       return false
-    console.log 'update ' + slide
+    Heros.update(
+        {
+            _id: heroId,
+            "slides.id": slide.id
+        },
+        {
+            $set:
+                {
+                    "slides.$.title": slide.title,
+                    "slides.$.uri": slide.uri
+                }
+        }
+    )
 
   deleteHeroSlide: (heroId, slide) ->
     # only admins can delete hero slides
