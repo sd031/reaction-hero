@@ -66,7 +66,7 @@ Template.updateHeroForm.events
         console.log error if error
 
 Template.updateHeroForm.rendered = ->
-
+  ###
   $slides = $(".heroSlides")
   $slides.sortable
     cursor: "move"
@@ -74,6 +74,7 @@ Template.updateHeroForm.rendered = ->
     placeholder: "sortable"
     forcePlaceholderSize: true
     update: (event, ui) ->
+   ###
 
 AutoForm.hooks updateHeroForm:
   onSuccess: (operation, result, template) ->
