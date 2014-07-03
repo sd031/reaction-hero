@@ -1,4 +1,9 @@
 Template.herodemo.rendered = ->
+  data = Heros.findOne()
+  instance = UI.renderWithData(Template.herocarousel,
+    feed: data
+  )
+  UI.insert instance, $("#demoslot")[0]
 
 Template.herodemo.helpers
   heros: ->

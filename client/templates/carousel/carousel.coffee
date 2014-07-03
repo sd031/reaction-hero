@@ -1,6 +1,6 @@
-Template.carousel.rendered = ->
+Template.herocarousel.rendered = ->
 
-Template.carousel.helpers
+Template.herocarousel.helpers
   hero: ->
     return Heros.findOne({})
   media: ->
@@ -8,7 +8,7 @@ Template.carousel.helpers
       return img
     return false
 
-Template.carousel.created = ->
+Template.herocarousel.created = ->
   Hero = Heros.findOne({})
 
   _.defer ->
