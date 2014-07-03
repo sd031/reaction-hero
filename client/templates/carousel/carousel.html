@@ -1,10 +1,10 @@
 <template name="carousel">
-<div id="carousel" class="carousel slide">
+{{#with hero}}
+<div id="hero_{{_id}}" class="carousel slide hero">
 
-  {{#with hero}}
     <ol class="carousel-indicators">
       {{#each slides}}
-      <li data-target="#carousel"></li>
+      <li data-target="#hero_{{_id}}"></li>
       {{/each}}
     </ol>
 
@@ -17,7 +17,7 @@
               <img src="{{url}}" class="product-grid-item-images img-responsive">
             </div>
           {{else}}
-            <img src="http://placekitten.com/200/300" alt="">
+            <img src="/resources/placeholder.gif" alt="">
           {{/with}}
 
           <div class="carousel-caption">
@@ -28,13 +28,15 @@
       {{/each}}
     </div>
 
-    <a class="left carousel-control" href="carousel" role="button" data-slide="prev">
+    {{#if showChevrons}}
+    <a class="left carousel-control" href="hero_{{_id}}" role="button" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
 
-    <a class="right carousel-control" href="carousel" role="button" data-slide="next">
+    <a class="right carousel-control" href="hero_{{_id}}" role="button" data-slide="next">
       <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
-  {{/with}}
+    {{/if}}
 </div>
+{{/with}}
 </template>

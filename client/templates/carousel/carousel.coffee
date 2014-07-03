@@ -9,24 +9,26 @@ Template.carousel.helpers
     return false
 
 Template.carousel.created = ->
+  Hero = Heros.findOne({})
+
   _.defer ->
       # blaze doesnt seem to like indexes with foreach loops
-      $('#carousel .item:first').addClass('active')
-      $('#carousel .carousel-indicators li:first').addClass('active')
+      $('#hero_' + Hero._id + ' .item:first').addClass('active')
+      $('#hero_' + Hero._id + ' .carousel-indicators li:first').addClass('active')
 
       # wire up the carousel
-      $("#carousel").carousel({interval: 2000})
+      $('#hero_' + Hero._id).carousel({interval: 2000})
 
-      $("#carousel .carousel-indicators li").each (idx, val) ->
+      $('#hero_' + Hero._id + ' .carousel-indicators li').each (idx, val) ->
         $(this).data("data-slide-to": idx).click ->
-          $("#carousel").carousel $(this).data("data-slide-to")
+          $('#hero_' + Hero._id).carousel $(this).data("data-slide-to")
           return
 
-      $("#carousel a[data-slide=\"prev\"]").click ->
-        $("#carousel").carousel "prev"
+      $('#hero_' + Hero._id + ' a[data-slide="prev"]').click ->
+        $('#hero_' + Hero._id).carousel "prev"
         return
 
-      $("#carousel a[data-slide=\"next\"]").click ->
-        $("#carousel").carousel "next"
+      $('#hero_' + Hero._id + ' a[data-slide="next"]').click ->
+        $('#hero_' + Hero._id).carousel "next"
         return
 
