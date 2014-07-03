@@ -40,5 +40,9 @@ Package.on_use(function (api, where) {
     "client/templates/demo/demo.coffee",
     "client/templates/demo/demo.less",
 
+    "client/templates/carousel/carousel.html",
+    "client/templates/carousel/carousel.coffee",
+    "client/templates/carousel/carousel.less",
+
   ], ["client"]);
 });
