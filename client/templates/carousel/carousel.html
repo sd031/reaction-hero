@@ -2,7 +2,7 @@
 {{#with hero}}
 <div id="hero_{{_id}}" class="carousel slide hero">
 
-    <ol class="carousel-indicators">
+    <ol class="carousel-indicators hidden-sm hidden-xs">
       {{#each slides}}
       <li data-target="#hero_{{_id}}"></li>
       {{/each}}
@@ -20,7 +20,7 @@
             <img src="/resources/placeholder.gif" alt="">
           {{/with}}
 
-          <div class="carousel-caption">
+          <div class="carousel-caption hidden-sm hidden-xs">
             {{title}}
           </div>
         </a>

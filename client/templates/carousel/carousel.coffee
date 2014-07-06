@@ -17,7 +17,7 @@ Template.herocarousel.created = ->
       $('#hero_' + Hero._id + ' .carousel-indicators li:first').addClass('active')
 
       # wire up the carousel
-      $('#hero_' + Hero._id).carousel({interval: 2000})
+      $('#hero_' + Hero._id).carousel({interval: 5000})
 
       $('#hero_' + Hero._id + ' .carousel-indicators li').each (idx, val) ->
         $(this).data("data-slide-to": idx).click ->
