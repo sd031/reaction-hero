@@ -25,6 +25,8 @@ HeroSlideSchema = @HeroSlideSchema
       optional: true
     showChevrons:
       type: Boolean
+    placements:
+      type: [String]
     slides:
       type: [HeroSlideSchema]
       optional: true
