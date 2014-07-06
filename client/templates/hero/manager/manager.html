@@ -51,7 +51,7 @@
         <ol class="heroSlides">
 
             {{#each slides}}
-            <li>
+            <li data-idx="{{ id }}">
                 <div class="well">
                     {{#autoForm collection="Heros" schema="HeroSlideSchema" doc=. type="method" meteormethod="updateHeroSlide" id=id resetOnSuccess="false"}}
                     <fieldset>

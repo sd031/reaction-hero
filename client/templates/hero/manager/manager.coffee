@@ -65,16 +65,23 @@ Template.updateHeroForm.events
       Meteor.call "deleteHeroSlide", selectedHeroIdx, $(event.currentTarget).data('idx'), (error, slideId) ->
         console.log error if error
 
-Template.updateHeroForm.rendered = ->
-  ###
-  $slides = $(".heroSlides")
-  $slides.sortable
-    cursor: "move"
-    opacity: 0.3
-    placeholder: "sortable"
-    forcePlaceholderSize: true
-    update: (event, ui) ->
-   ###
+Template.updateHeroForm.created = ->
+  _.defer ->
+    selectedHeroIdx = Session.get "selectedHeroIdx"
+    $slides = $("ol.heroSlides")
+    $slides.sortable update: (el) ->
+      sortedSlides = _.map($slides.sortable("toArray",
+          attribute: "data-idx"
+        ), (idx) ->
+          {
+            id:    idx,
+            title: $('input[name=title][data-idx='+idx+']').val()
+            uri:   $('input[name=uri][data-idx='+idx+']').val()
+          }
+        )
+
+      Meteor.call "updateHeroSlides", selectedHeroIdx, sortedSlides, (error) ->
+        console.log error if error
 
 AutoForm.hooks updateHeroForm:
   onSuccess: (operation, result, template) ->
