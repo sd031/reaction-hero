@@ -3,3 +3,8 @@ Template.hero.title = ->
 
 Template.hero.description = ->
   "Create and manage Hero Carousels for Reaction Commerce."
+
+Template.coreLayout.rendered = ->
+  data = Heros.find({placements: IronLocation.path()}).fetch()
+  if data
+    UI.insert UI.renderWithData(Template.herocarousel, { Hero: data }), $("#main .container-fluid")[0], $(".product-grid")[0]
