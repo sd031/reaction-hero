@@ -81,3 +81,4 @@ Meteor.methods
     unless Roles.userIsInRole(Meteor.userId(), ['admin'])
       return false
 
+    Heros.update({_id: heroId}, {$addToSet:{"placements": page}})

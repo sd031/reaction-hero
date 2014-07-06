@@ -44,5 +44,9 @@ Package.on_use(function (api, where) {
     "client/templates/carousel/carousel.coffee",
     "client/templates/carousel/carousel.less",
 
+    "client/templates/app-icon/app-icon.html",
+    "client/templates/app-icon/app-icon.coffee",
+    "client/templates/app-icon/app-icon.less",
+
   ], ["client"]);
 });

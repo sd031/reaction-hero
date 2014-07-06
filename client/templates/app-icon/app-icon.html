@@ -3,4 +3,11 @@
   <a id="add-hero-link" alt="Add a Hero"><i class="add-hero-link fa fa-image"></i></a>
   <span class="icon-text">Add Hero</span>
 </div>
+
+<br />
+<ul id="heroselect" style="display:none;">
+  {{#each heros}}
+  <li><a data-heroidx="{{_id}}">{{ name }}</a></li>
+  {{/each}}
+</ul>
 </template>
