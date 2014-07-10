@@ -7,4 +7,6 @@ Template.hero.description = ->
 Template.coreLayout.rendered = ->
   data = Heros.find({placements: IronLocation.path()}).fetch()
   if data
-    UI.insert UI.renderWithData(Template.herocarousel, { Hero: data }), $("#main .container-fluid")[0], $(".product-grid")[0]
+    UI.insert UI.renderWithData(Template.herocarousel, {
+        hero: data[0]
+    }), $("#main .container-fluid")[0], $(".product-grid")[0]
