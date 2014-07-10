@@ -16,7 +16,7 @@ Template.heroappicon.events
     event.preventDefault()
     event.stopPropagation()
 
-    Meteor.call "addHeroToPage", $(event.currentTarget).data('heroidx'), IronLocation.path(), (error) ->
+    Meteor.call "addHeroToPage", $(event.currentTarget).data('heroidx'), Router.current().route.name, (error) ->
       console.log error if error
 
     $("#heroselect").hide()
