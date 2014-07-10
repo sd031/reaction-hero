@@ -1,8 +1,8 @@
 {
   "name": "reaction-hero",
-  "description": "REPLACEME - What does this package (or the original one you're wrapping) do?",
+  "description": "Hero Image Carousels for Reaction Commerce",
   "homepage": "",
-  "author": "Your Name <your@email> (http://yoursite)",
+  "author": "andy@arroyolabs.com (http://arroyolabs.com)",
   "version": "0.0.1",
   "git": "",
   "packages": {}
