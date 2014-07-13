@@ -1,12 +1,4 @@
-Template.userDropdown.rendered = ->
-  ###
-  Insert the App Icon to add a hero into the User Dropdown
-  ###
-  unless Roles.userIsInRole(Meteor.userId(), ['admin'])
-    return false
-  UI.insert UI.render(Template.heroappicon), $(".user-accounts-dropdown-apps")[0]
-
-Template.heroappicon.events
+Template.heroadd.events
   "click #add-hero-link": (event, template) ->
     event.preventDefault()
     event.stopPropagation()
@@ -21,6 +13,6 @@ Template.heroappicon.events
 
     $("#heroselect").hide()
 
-Template.heroappicon.helpers
+Template.heroadd.helpers
   heros: ->
     return Heros.find().fetch()

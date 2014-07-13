@@ -1,0 +1,15 @@
+<template name="heroadd">
+<div id="addhero">
+  <a id="add-hero-link" alt="Add a Hero">
+    <i class="add-hero-link fa fa-image"></i>
+    <span class="icon-text">Add Hero</span>
+  </a>
+
+  <br />
+  <ul id="heroselect" style="display:none;">
+    {{#each heros}}
+    <li><a data-heroidx="{{_id}}">{{ name }}</a></li>
+    {{/each}}
+  </ul>
+</div>
+</template>

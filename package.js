@@ -36,13 +36,13 @@ Package.on_use(function (api, where) {
     "client/templates/dashboard/widget/widget.coffee",
     "client/templates/dashboard/widget/widget.less",
 
+    "client/templates/addhero/addhero.html",
+    "client/templates/addhero/addhero.coffee",
+    "client/templates/addhero/addhero.less",
+
     "client/templates/carousel/carousel.html",
     "client/templates/carousel/carousel.coffee",
     "client/templates/carousel/carousel.less",
-
-    "client/templates/app-icon/app-icon.html",
-    "client/templates/app-icon/app-icon.coffee",
-    "client/templates/app-icon/app-icon.less",
 
   ], ["client"]);
 });
