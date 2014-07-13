@@ -36,10 +36,6 @@ Package.on_use(function (api, where) {
     "client/templates/dashboard/widget/widget.coffee",
     "client/templates/dashboard/widget/widget.less",
 
-    "client/templates/demo/demo.html",
-    "client/templates/demo/demo.coffee",
-    "client/templates/demo/demo.less",
-
     "client/templates/carousel/carousel.html",
     "client/templates/carousel/carousel.coffee",
     "client/templates/carousel/carousel.less",
