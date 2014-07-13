@@ -14,7 +14,8 @@ Clone to reaction/packages then add package to local meteor server:
 * <strike>Update Hero Slides using the Admin</strike>
 * <strike>Create a preview Bootstrap Carousel to display the Hero Slides</strike>
 * <strike>Figure out how to inject the slideshow into a template</strike>
+* <strike>Insert the carousel before the product grid</strike>
 * Scale and fix Hero Slide images on upload
 * Update the Admin UI (its pretty ugly)
-* Insert the carousel before the product grid
+* Update the Add Carousel Button
 * Figure out why the widget won't show up in the Dashboard App Store
