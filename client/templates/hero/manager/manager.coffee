@@ -65,6 +65,11 @@ Template.updateHeroForm.events
       Meteor.call "deleteHeroSlide", selectedHeroIdx, $(event.currentTarget).data('idx'), (error, slideId) ->
         console.log error if error
 
+  "click .image-remove-link": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+    @remove()
+
 Template.updateHeroForm.created = ->
   _.defer ->
     selectedHeroIdx = Session.get "selectedHeroIdx"
