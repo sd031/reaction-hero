@@ -82,3 +82,15 @@ Meteor.methods
       return false
 
     Heros.update({_id: heroId}, {$addToSet:{"placements": page}})
+
+  ###
+  # deleteHeroFromPage
+  ###
+  deleteHeroFromPage: (heroId, page) ->
+    # only admins can remove hero from the page
+    unless Roles.userIsInRole(Meteor.userId(), ['admin'])
+      return false
+
+    Heros.update(heroId, {$pull:{"placements": page}})
+
+

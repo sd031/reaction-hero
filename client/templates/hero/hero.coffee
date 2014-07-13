@@ -1,5 +1,5 @@
 Router.onAfterAction ->
-  data = Heros.find({placements: Router.current().route.name}).fetch()
+  data = Heros.find({'placements': Router.current().route.name}).fetch()
   if data[0]
     UI.insert UI.renderWithData(Template.herocarousel, {
         hero: data[0]

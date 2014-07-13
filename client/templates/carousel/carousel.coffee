@@ -1,4 +1,10 @@
-Template.herocarousel.rendered = ->
+Template.herocarousel.events
+
+  "click .hero-remove-link": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+    Meteor.call "deleteHeroFromPage", template.data.hero._id, Router.current().route.name, (error) ->
+      console.log error if error
 
 Template.herocarousel.helpers
   media: ->

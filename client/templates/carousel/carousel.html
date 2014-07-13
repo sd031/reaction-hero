@@ -37,6 +37,12 @@
       <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
     {{/if}}
+
+    {{#if userHasRole "admin"}}
+      <div class="hero-tools">
+        <a class="hero-remove-link" data-index="{{_id}}"><i class="remove-hero fa fa-times-circle fa-2x"></i></a>
+      </div>
+    {{/if}}
 </div>
 {{/with}}
 </template>
