@@ -3,24 +3,27 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
+  // both
   api.use([
     "standard-app-packages",
     "coffeescript",
     "underscore",
     "simple-schema",
-    "autoform"
+    "autoform",
+    "reaction-core"
   ], ["client", "server"]);
 
+  // client
   api.use([
     "iron-router",
-    "less",
-    "reaction-core"
+    "less"
   ], ["client"]);
 
   api.add_files("common/collections.coffee",["client","server"]);
   api.add_files("server/publications.coffee",["server"]);
   api.add_files("server/methods/heros/methods.coffee",["server"]);
   api.add_files([
+    "client/register.coffee",
     "client/subscriptions.coffee",
     "client/routing.coffee",
 
