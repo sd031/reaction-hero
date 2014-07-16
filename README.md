@@ -2,7 +2,7 @@
 
 A Hero Carousel Package for Reaction Commerce.
 
-Please note this is not at all ready for production, and is currently in development.
+This package will allow you to add rotaing 'Hero' carousels to pages or sections of your Reaction Commerce store.
 
 Clone to reaction/packages then add package to local meteor server:
 
