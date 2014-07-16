@@ -2,11 +2,13 @@
 {{#with hero}}
 <div id="hero_{{_id}}" class="carousel slide hero">
 
+    {{#if slideCount}}
     <ol class="carousel-indicators hidden-sm hidden-xs">
       {{#each slides}}
       <li data-target="#hero_{{hero._id}}"></li>
       {{/each}}
     </ol>
+    {{/if}}
 
     <div class="carousel-inner">
       {{#each slides}}

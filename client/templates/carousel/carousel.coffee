@@ -12,6 +12,9 @@ Template.herocarousel.helpers
       return img
     return false
 
+Template.herocarousel.slideCount = ->
+  return (@.slides.length > 1)
+
 Template.herocarousel.created = ->
 
   _.defer ->
