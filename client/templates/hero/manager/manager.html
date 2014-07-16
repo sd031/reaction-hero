@@ -1,112 +1,92 @@
 <template name="heroManager">
-<div class="hero-manager">
-  
-  <a id="add-hero-link" alt="Add Hero Carousel">
-    <i class="add-hero-link fa fa-plus"></i>
-    <span class="icon-text">Create a New Hero Carousel</span>
-  </a>
+  <div class="hero-manager">
+    <h3>Slides</h3>
+    <a id="create-hero-slide" alt="Add a new slide">
+      <i class="fa fa-plus"></i>
+      <span class="icon-text">Create a New Slide</span>
+    </a>
 
-  <h3>Heros</h3>
-  <ul>
-  {{#each heros}}
-    <li>
-      <a class="hero-edit" data-heroidx="{{_id}}">{{name}}</a>
-      <div class="well" data-heroidx="{{_id}}" style="display:none;">
-        {{> updateHeroForm }} 
-      </div>
-    </li>
-  {{/each}}
-  </ul>
-</div>
+    {{#if selectSlideOptions}}
+    {{#autoForm id="selectSlide" schema=selectSlideSchema}}
+    {{! We are not really submitting this form, we just use autoForm to simplify creating the select}}
+    {{> afFieldInput name="selectedSlideId" options=selectSlideOptions class="slide-select" firstOption="(Select a Slide to Edit)" value=selectedHeroSlide._id}}
+    {{/autoForm}}
+    {{/if}}
+    
+    {{#with selectedHeroSlide}}
+      {{> updateSlideForm}}
+    {{/with}}
+
+    <h3>Carousel</h3>
+    <a id="create-hero" alt="Add a new carousel">
+      <i class="fa fa-plus"></i>
+      <span class="icon-text">Create a New Hero Carousel</span>
+    </a>
+    
+    {{#if selectHeroOptions}}
+    {{#autoForm id="selectHero" schema=selectHeroSchema}}
+    {{! We are not really submitting this form, we just use autoForm to simplify creating the select}}
+    {{> afFieldInput name="selectedHeroId" options=selectHeroOptions class="hero-select" firstOption="(Select a Hero to Edit)" value=selectedHero._id}}
+    {{/autoForm}}
+    {{/if}}
+    
+    {{#with selectedHero}}
+      {{> updateHeroForm}}
+    {{/with}}
+  </div>
 </template>
 
 <template name="updateHeroForm">
-<fieldset>
-    {{#autoForm collection="Heros" doc=heroDoc type="update" validation="keyup" id="_id" resetOnSuccess="false"}}
+<div class="well">
+  {{#autoForm collection="Heros" doc=. type="update" id="heroEditForm"}}
+    {{> afQuickField name="name"}}
+    {{> afQuickField name="showChevrons"}}
+    {{> afQuickField name="slides" options=selectSlideOptions noselect=true}}
     <div class="form-group">
-        <div class="row">
-            <div class="col-xs-1">
-                <button type="submit" id="update-hero" class="btn btn-primary">Update</button>
-            </div>
-            <div class="col-xs-1">
-                {{> afDeleteButton collection="Heros" doc=heroDoc}}
-            </div>
-        </div>
+      <button type="submit" class="btn btn-primary">Update</button>
+      <button type="button" class="btn btn-danger delete-hero" data-hero="{{../_id}}">Delete</button>
     </div>
-    <div class="form-group">
-        {{>afFieldLabel name='name'}}
-        {{>afFieldInput name='name'}}
-        {{#if afFieldIsInvalid name='name'}}
-            <span class="help-block">{{afFieldMessage name='name'}}</span>
-        {{/if}}
+  {{/autoForm}}
+</div>
+</template>
+
+<template name="updateSlideForm">
+  <div class="well">
+    {{#autoForm collection="HeroSlides" doc=. type="update" id="slideEditForm"}}
+    <div class="media">
+      <div class="pull-left">
+        {{#with media}}
+          <div class="center-cropped" style="background-image: url('{{url}}');">
+            <img src="{{url}}" class="product-grid-item-images img-responsive">
+            <div class="slide-tools">
+              <a class="image-remove-link" data-idx="{{ metadata.slideId }}">
+                <i class="remove-image fa fa-times-circle fa-2x"></i>
+              </a>
+            </div>
+          </div>
+        {{else}}
+          {{>heroImageUpload idx=this._id}}
+        {{/with}}
+      </div>
+      <div class="media-body">
+        <fieldset>
+          {{> afQuickField name="name"}}
+          {{> afQuickField name="title"}}
+          {{> afQuickField name="uri"}}
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="button" class="btn btn-danger delete-slide" data-slide="{{../_id}}">Delete</button>
+          </div>
+        </fieldset>
+      </div>
     </div>
     {{/autoForm}}
-
-    <div class="form-group">
-        <a id="add-hero-slide" alt="Add a new Slide">
-            <i class="fa fa-plus"></i>
-            <span class="icon-text">Create a New Slide</span>
-        </a>
-
-        <ol class="heroSlides">
-
-            {{#each slides}}
-            <li data-idx="{{ id }}">
-                <div class="well">
-                    {{#autoForm collection="Heros" schema="HeroSlideSchema" doc=. type="method" meteormethod="updateHeroSlide" id=id resetOnSuccess="false"}}
-                    <fieldset>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                {{#with media}}
-                                  <div class="center-cropped" style="background-image: url('{{url}}');">
-                                    <img src="{{url}}" class="product-grid-item-images img-responsive">
-                                    <div class="slide-tools">
-                                      <a class="image-remove-link" data-idx="{{ metadata.slideId }}">
-                                        <i class="remove-image fa fa-times-circle fa-2x"></i>
-                                      </a>
-                                    </div>
-                                  </div>
-                                {{else}}
-                                  {{>heroImageUpload idx=id}}
-                                {{/with}}
-                            </div>
-                            <div class="col-xs-6">
-                                <fieldset>
-                                    {{>afFieldLabel name='title'}}
-                                    {{>afFieldInput name='title' data-idx=id}}
-                                    {{#if afFieldIsInvalid name='title'}}
-                                        <span class="help-block">{{afFieldMessage name='title'}}</span>
-                                    {{/if}}
-
-                                    {{>afFieldLabel name='uri'}}
-                                    {{>afFieldInput name='uri' data-idx=id}}
-                                    {{#if afFieldIsInvalid name='uri'}}
-                                        <span class="help-block">{{afFieldMessage name='uri'}}</span>
-                                    {{/if}}
-
-                                    {{>afFieldInput name="id" type="hidden"}}
-
-                                    <button data-idx="{{id}}" class="btn btn-primary update-hero-slide">Update</button>
-                                    <button data-idx="{{id}}" class="btn btn-danger delete-hero-slide">Delete</button>
-                                </fieldset>
-                            </div>
-                        </div>
-                    </fieldset>
-                    {{/autoForm}}
-                </div>
-            </li>
-            {{/each}}
-
-        </ol>
-
-    </div>
-
-</fieldset>
+  </div>  
 </template>
 
 <template name="heroImageUpload">
 <div id="dropzone" class="dropzone">
     <input name="files" id="files" class="hidden" type="file" multiple/>
-    <div class="btn btn-default btn-block" id="btn-upload">Drop file to Upload</div>
+    <div class="btn btn-default select-file" id="btn-upload">Drop file to Upload</div>
 </div>
 </template>

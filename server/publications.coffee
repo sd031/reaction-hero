@@ -1,21 +1,30 @@
 Meteor.publish "Heros", ->
-  shop = Meteor.app.getCurrentShop(this)
-  if shop
+  shopId = Meteor.app.getShopId(this)
+  if shopId
     Heros.find
-      shopId: shop._id
+      shopId: shopId
   else
     []
 
+Meteor.publish "HeroSlides", ->
+  shopId = Meteor.app.getShopId(this)
+  if shopId
+    HeroSlides.find
+      shopId: shopId
+  else
+    []
+
+adminOnly = (userId) ->
+  unless Roles.userIsInRole(userId, ['admin'])
+    return false
+  return true
+
 Heros.allow
-  insert: (userId, doc) ->
-    unless Roles.userIsInRole(userId, ['admin'])
-      return false
-    true
-  update: (userId, doc, fields, modifier) ->
-    unless Roles.userIsInRole(userId, ['admin'])
-      return false
-    true
-  remove: (userId, doc) ->
-    unless Roles.userIsInRole(userId, ['admin'])
-      return false
-    true
+  insert: adminOnly
+  update: adminOnly
+  remove: adminOnly
+
+HeroSlides.allow
+  insert: adminOnly
+  update: adminOnly
+  remove: adminOnly

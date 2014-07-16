@@ -1,5 +1,5 @@
 Router.onAfterAction ->
-  data = Heros.find({'placements': Router.current().route.name}).fetch()
+  data = Heros.find({'placements': Router.current()?.route?.name}).fetch()
   if data[0]
     $("#addhero, .hero").remove()
     if $('hero_' + data[0]._id).length == 0
