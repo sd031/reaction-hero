@@ -1,125 +1,117 @@
 Template.heroManager.helpers
   heros: ->
-    selector = {}
-    return Heros.find(selector).fetch()
+    return Heros.find()
+  slides: ->
+    return HeroSlides.find()
+  selectSlideSchema: ->
+    return new SimpleSchema({
+      selectedSlideId: 
+        type: String
+    });
+  selectSlideOptions: ->
+    return HeroSlides.find({}, {sort: {name: 1}}).map (slide) ->
+      return { label: slide.name, value: slide._id }
+  selectedHeroSlide: ->
+    id = Session.get 'selectedHeroSlideId'
+    return HeroSlides.findOne(id)
+  selectHeroSchema: ->
+    return new SimpleSchema({
+      selectedHeroId: 
+        type: String
+    });
+  selectHeroOptions: ->
+    return Heros.find({}, {sort: {name: 1}}).map (hero) ->
+      return { label: hero.name, value: hero._id }
+  selectedHero: ->
+    id = Session.get 'selectedHeroId'
+    return Heros.findOne(id)
 
 Template.heroManager.events
-  "click #add-hero-link": (event, template) ->
+  "click #create-hero-slide": (event, template) ->
     event.preventDefault()
     event.stopPropagation()
-    Meteor.call "createHero", (error) ->
+    HeroSlides.insert {}, (error, result) ->
+      if error
+        console.log error
+      else
+        Session.set 'selectedHeroSlideId', result
+
+  "click #create-hero": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+    Heros.insert {}, (error, result) ->
+      if error
+        console.log error
+      else
+        Session.set 'selectedHeroId', result
+
+  "change [name=selectedSlideId]": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+    Session.set 'selectedHeroSlideId', $(event.currentTarget).val()
+
+  "change [name=selectedHeroId]": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+    Session.set 'selectedHeroId', $(event.currentTarget).val()
+
+Template.updateSlideForm.helpers
+  media: ->
+    return Media.findOne({'metadata.slideId': this._id})
+
+Template.updateSlideForm.events
+  "click .delete-slide": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+    id = $(event.currentTarget).data("slide")
+    Meteor.call "deleteHeroSlide", id, (error, result) ->
       console.log error if error
 
-  "click .hero-edit": (event, template) ->
-    event.preventDefault()
-    event.stopPropagation()
-    Session.set 'selectedHeroIdx', $(event.currentTarget).data('heroidx')
-    $('.well[data-heroidx=' + $(event.currentTarget).data('heroidx') + ']').toggle()
-
-Template.updateHeroForm.heroDoc = ->
-  selectedHeroIdx = Session.get "selectedHeroIdx"
-  if selectedHeroIdx
-    return Heros.findOne _id: selectedHeroIdx
-
-Template.updateHeroForm.helpers
-  media: ->
-    if img = Media.findOne({'metadata.slideId': this.id})
-      return img
-    return false
-
-Template.updateHeroForm.events
-  "click #add-hero-slide": (event, template) ->
-    event.preventDefault()
-    event.stopPropagation()
-    selectedHeroIdx = Session.get "selectedHeroIdx"
-
-    slideTitle = ''
-    slideUri = ''
-    slide = {title: slideTitle, uri: slideUri}
-
-    if selectedHeroIdx
-      Meteor.call "createHeroSlide", selectedHeroIdx, slide, (error, slideId) ->
-        console.log error if error
-
-  "click .update-hero-slide": (event, template) ->
-    event.preventDefault()
-    event.stopPropagation()
-    selectedHeroIdx = Session.get "selectedHeroIdx"
-
-    idx = $(event.currentTarget).data('idx')
-    slide = {
-        id: idx,
-        title: $('input[name=title][data-idx='+idx+']').val()
-        uri: $('input[name=uri][data-idx='+idx+']').val()
-    }
-
-    if selectedHeroIdx
-      Meteor.call "updateHeroSlide", selectedHeroIdx, slide, (error, slideId) ->
-        console.log error if error
-
-  "click .delete-hero-slide": (event, template) ->
-    event.preventDefault()
-    event.stopPropagation()
-    selectedHeroIdx = Session.get "selectedHeroIdx"
-    if selectedHeroIdx
-      Meteor.call "deleteHeroSlide", selectedHeroIdx, $(event.currentTarget).data('idx'), (error, slideId) ->
-        console.log error if error
-
-  "click .image-remove-link": (event, template) ->
+  "click .remove-image": (event, template) ->
     event.preventDefault()
     event.stopPropagation()
     @remove()
 
-Template.updateHeroForm.created = ->
-  _.defer ->
-    selectedHeroIdx = Session.get "selectedHeroIdx"
-    $slides = $("ol.heroSlides")
-    $slides.sortable update: (el) ->
-      sortedSlides = _.map($slides.sortable("toArray",
-          attribute: "data-idx"
-        ), (idx) ->
-          {
-            id:    idx,
-            title: $('input[name=title][data-idx='+idx+']').val()
-            uri:   $('input[name=uri][data-idx='+idx+']').val()
-          }
-        )
+Template.updateHeroForm.helpers
+  selectSlideOptions: ->
+    return HeroSlides.find({}, {sort: {name: 1}}).map (slide) ->
+      return { label: slide.name, value: slide._id }
 
-      Meteor.call "updateHeroSlides", selectedHeroIdx, sortedSlides, (error) ->
-        console.log error if error
+Template.updateHeroForm.events
+  "click .delete-hero": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+    id = $(event.currentTarget).data("hero")
+    Heros.remove(id)
 
-AutoForm.hooks updateHeroForm:
-  onSuccess: (operation, result, template) ->
-    Alerts.add "saved.", "success"
+AutoForm.hooks
+  updateHeroForm:
+    onSuccess: (operation, result, template) ->
+      Alerts.add "saved.", "success"
 
-  onError: (operation, error, template) ->
-    Alerts.add "failed. " + error, "danger"
+    onError: (operation, error, template) ->
+      Alerts.add "failed. " + error, "danger"
+  updateSlideForm:
+    onSuccess: (operation, result, template) ->
+      Alerts.add "saved.", "success"
+
+    onError: (operation, error, template) ->
+      Alerts.add "failed. " + error, "danger"
+  selectSlide:
+    onSubmit: ->
+      return false
 
 Template.heroImageUpload.events
   "click #btn-upload": (event,template) ->
-    $("#files").click()
+    template.$("#files").click()
 
-  "change #files": (event, template) ->
-    selectedHeroIdx = Session.get "selectedHeroIdx"
-    slideId = template.data.idx
+  "change #files, dropped #dropzone": (event, template) ->
+    selectedHeroSlideId = Session.get "selectedHeroSlideId"
+    return unless selectedHeroSlideId
     FS.Utility.eachFile event, (file, selectedHeroIdx, slideIdx) ->
       fileObj = new FS.File(file)
       fileObj.metadata =
         ownerId: Meteor.userId()
-        heroId: selectedHeroIdx
-        slideId: slideId
+        slideId: selectedHeroSlideId
         shopId: Meteor.app.shopId
       Media.insert fileObj
-
-  "dropped #dropzone": (event, template) ->
-    selectedHeroIdx = Session.get "selectedHeroIdx"
-    slideId = template.data.idx
-    if selectedHeroIdx
-      FS.Utility.eachFile event, (file, selectedHeroIdx, slideIdx) ->
-        fileObj = new FS.File(file)
-        fileObj.metadata =
-          ownerId: Meteor.userId()
-          heroId: selectedHeroIdx
-          slideId: slideId
-          shopId: Meteor.app.shopId
-        Media.insert fileObj
