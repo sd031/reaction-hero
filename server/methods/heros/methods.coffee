@@ -41,3 +41,14 @@ Meteor.methods
       return false
 
     Heros.update({_id: heroId}, {$addToSet:{"slides": slideId}})
+
+  ###
+  # updateHeroSlides
+  ###
+  updateHeroSlides: (heroId, slides) ->
+    # only admins add slides to hero
+    unless Roles.userIsInRole(Meteor.userId(), ['admin'])
+      return false
+
+    Heros.update({_id: heroId}, {$set:{"slides": slides}})
+

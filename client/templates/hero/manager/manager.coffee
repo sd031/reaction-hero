@@ -102,6 +102,22 @@ Template.updateHeroForm.events
     Meteor.call "addSlideToHero", heroId, slideId, (error, result) ->
       console.log error if error
 
+
+Template.updateHeroForm.created = ->
+  _.defer ->
+    heroId = Session.get 'selectedHeroId'
+    $slides = $(".heroSlides")
+    $slides.sortable update: (el) ->
+
+      sortedSlides = _.map($slides.sortable("toArray",
+        attribute: "data-idx"
+      ), (idx) ->
+        return idx
+      )
+
+      Meteor.call "updateHeroSlides", heroId, sortedSlides, (error) ->
+        console.log error if error
+
 AutoForm.hooks
   updateHeroForm:
     onSuccess: (operation, result, template) ->

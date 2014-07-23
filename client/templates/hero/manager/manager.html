@@ -50,18 +50,14 @@
     {{> afQuickField name="showChevrons"}}
     {{> afFieldInput name="slides" type="hidden"}}
 
-    <ul>
-
-      <ul>
-        {{#each slides }}
-          {{#with media . }}
-          <li>
-            <img src="{{ url }}" />
-          </li>
-          {{/with}}
-        {{/each}}
-      </ul>
-
+    <ul class="heroSlides">
+      {{#each slides }}
+        {{#with media . }}
+        <li data-idx="{{ .. }}">
+          <img src="{{ url }}" />
+        </li>
+        {{/with}}
+      {{/each}}
     </ul>
 
     <div class="form-group">
