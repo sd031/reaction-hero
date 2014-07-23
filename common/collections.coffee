@@ -43,6 +43,10 @@
 
 HeroSlides = @HeroSlides
 
+HeroSlides.helpers
+  image: ->
+    Media.findOne 'metadata.slideId': this._id
+
 @Heros = new Meteor.Collection 'Heros',
   schema:
     shopId:
@@ -84,8 +88,13 @@ HeroSlides = @HeroSlides
     placements:
       type: [String]
       optional: true
-    slides:
+    slideIds:
       type: [String]
       optional: true
 
 Heros = @Heros
+
+Heros.helpers
+  slides: ->
+    return _.map this.slideIds, (id) ->
+      return HeroSlides.findOne id

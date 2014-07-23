@@ -1,8 +1,4 @@
 Template.heroManager.helpers
-  heros: ->
-    return Heros.find()
-  slides: ->
-    return HeroSlides.find()
   selectSlideSchema: ->
     return new SimpleSchema({
       selectedSlideId:
@@ -55,10 +51,6 @@ Template.heroManager.events
     event.stopPropagation()
     Session.set 'selectedHeroId', $(event.currentTarget).val()
 
-Template.updateSlideForm.helpers
-  media: ->
-    return Media.findOne({'metadata.slideId': this._id})
-
 Template.updateSlideForm.events
   "click .delete-slide": (event, template) ->
     event.preventDefault()
@@ -74,20 +66,9 @@ Template.updateSlideForm.events
 
 Template.updateHeroForm.helpers
   addSlideOptions: ->
-    return HeroSlides.find({}, {sort: {name: 1}}).map (slide) ->
-      return { label: slide.name, value: slide._id }
-  addSlideSchema: ->
-    return new SimpleSchema({
-      addSlideId:
-        type: String
-    });
-  media: (id) ->
-    img = Media.findOne({'metadata.slideId': id})
-    heroSlide = HeroSlides.findOne({_id: id})
-    return {
-            'img': img,
-            'slide': heroSlide
-            }
+    return HeroSlides.find({}, {sort: {name: 1}})
+  slideIsSelected: ->
+    return Session.equals "selectedSlideIdForHeroAdd", this._id
 
 Template.updateHeroForm.events
   "click .delete-hero": (event, template) ->
@@ -95,33 +76,49 @@ Template.updateHeroForm.events
     event.stopPropagation()
     id = $(event.currentTarget).data("hero")
     Heros.remove(id)
+    return
 
-  "change [name=addSlideId]": (event, template) ->
+  "click .add-slide": (event, template) ->
     event.preventDefault()
     event.stopPropagation()
 
     heroId = Session.get 'selectedHeroId'
-    slideId = $(event.currentTarget).val()
-    console.log slideId
+    slideId = Session.get "selectedSlideIdForHeroAdd"
+
+    return unless heroId and slideId
 
     Meteor.call "addSlideToHero", heroId, slideId, (error, result) ->
-      console.log error if error
+      if error
+        console.log error
+      else
+        Deps.flush()
+        updateSortable()
 
+    return
 
-Template.updateHeroForm.created = ->
-  _.defer ->
+  "change .slide-select": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+
+    Session.set "selectedSlideIdForHeroAdd", $(event.currentTarget).val()
+    return
+
+  "click .slide-remove-from-hero-link": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+
     heroId = Session.get 'selectedHeroId'
-    $slides = $(".heroSlides")
-    $slides.sortable update: (el) ->
+    slideId = this._id
 
-      sortedSlides = _.map($slides.sortable("toArray",
-        attribute: "data-idx"
-      ), (idx) ->
-        return idx
-      )
+    return unless heroId and slideId
 
-      Meteor.call "updateHeroSlides", heroId, sortedSlides, (error) ->
-        console.log error if error
+    Heros.update heroId,
+      $pull:
+        slideIds: slideId
+    return
+
+Template.updateHeroForm.rendered = ->
+  updateSortable()
 
 AutoForm.hooks
   updateHeroForm:
@@ -154,3 +151,17 @@ Template.heroImageUpload.events
         slideId: selectedHeroSlideId
         shopId: Meteor.app.shopId
       Media.insert fileObj
+
+updateSortable = ->
+  heroId = Session.get 'selectedHeroId'
+  $slides = $(".heroSlides")
+  $slides.sortable update: (el) ->
+
+    sortedSlides = _.map($slides.sortable("toArray",
+      attribute: "data-idx"
+    ), (idx) ->
+      return idx
+    )
+
+    Meteor.call "updateHeroSlides", heroId, sortedSlides, (error) ->
+      console.log error if error

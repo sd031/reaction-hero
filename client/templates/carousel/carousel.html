@@ -4,8 +4,8 @@
 
     {{#if slideCount}}
     <ol class="carousel-indicators hidden-sm hidden-xs">
-      {{#each slides}}
-      <li data-target="#hero_{{hero._id}}"></li>
+      {{#each slideIds}}
+      <li data-target="#hero_{{../_id}}"></li>
       {{/each}}
     </ol>
     {{/if}}
@@ -14,7 +14,7 @@
       {{#each slides}}
       <div class="item">
         <a href="{{uri}}">
-          {{#with media .}}
+          {{#with image}}
             <div class="center-cropped" style="background-image: url('{{url}}');">
               <img src="{{url}}" class="product-grid-item-images img-responsive">
             </div>
