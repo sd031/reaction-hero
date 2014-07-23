@@ -13,7 +13,7 @@
     {{/autoForm}}
     {{/if}}
     
-    {{#with selectedHeroSlide}}
+    {{#with selectedHeroSlide }}
       {{> updateSlideForm}}
     {{/with}}
 
@@ -38,10 +38,32 @@
 
 <template name="updateHeroForm">
 <div class="well">
+
+  {{#if addSlideOptions}}
+    {{#autoForm id="addHeroSlide" schema=addSlideSchema}}
+      {{> afFieldInput name="addSlideId" options=addSlideOptions class="slide-select" firstOption="(Select a Slide to Add)" value=false}}
+    {{/autoForm}}
+  {{/if}}
+
   {{#autoForm collection="Heros" doc=. type="update" id="heroEditForm"}}
     {{> afQuickField name="name"}}
     {{> afQuickField name="showChevrons"}}
-    {{> afQuickField name="slides" options=selectSlideOptions noselect=true}}
+    {{> afFieldInput name="slides" type="hidden"}}
+
+    <ul>
+
+      <ul>
+        {{#each slides }}
+          {{#with media . }}
+          <li>
+            <img src="{{ url }}" />
+          </li>
+          {{/with}}
+        {{/each}}
+      </ul>
+
+    </ul>
+
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Update</button>
       <button type="button" class="btn btn-danger delete-hero" data-hero="{{../_id}}">Delete</button>

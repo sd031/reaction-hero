@@ -32,4 +32,12 @@ Meteor.methods
 
     Heros.update(heroId, {$pull:{"placements": page}})
 
+  ###
+  # addSlideToHero
+  ###
+  addSlideToHero: (heroId, slideId) ->
+    # only admins add slides to hero
+    unless Roles.userIsInRole(Meteor.userId(), ['admin'])
+      return false
 
+    Heros.update({_id: heroId}, {$addToSet:{"slides": slideId}})

@@ -7,8 +7,8 @@ Template.herocarousel.events
       console.log error if error
 
 Template.herocarousel.helpers
-  media: ->
-    if img = Media.findOne({'metadata.slideId': this.id})
+  media: (id) ->
+    if img = Media.findOne({'metadata.slideId': id})
       return img
     return false
 

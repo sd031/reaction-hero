@@ -5,7 +5,7 @@ Template.heroManager.helpers
     return HeroSlides.find()
   selectSlideSchema: ->
     return new SimpleSchema({
-      selectedSlideId: 
+      selectedSlideId:
         type: String
     });
   selectSlideOptions: ->
@@ -16,7 +16,7 @@ Template.heroManager.helpers
     return HeroSlides.findOne(id)
   selectHeroSchema: ->
     return new SimpleSchema({
-      selectedHeroId: 
+      selectedHeroId:
         type: String
     });
   selectHeroOptions: ->
@@ -73,9 +73,16 @@ Template.updateSlideForm.events
     @remove()
 
 Template.updateHeroForm.helpers
-  selectSlideOptions: ->
+  addSlideOptions: ->
     return HeroSlides.find({}, {sort: {name: 1}}).map (slide) ->
       return { label: slide.name, value: slide._id }
+  addSlideSchema: ->
+    return new SimpleSchema({
+      addSlideId:
+        type: String
+    });
+  media: (id) ->
+    return Media.findOne({'metadata.slideId': id})
 
 Template.updateHeroForm.events
   "click .delete-hero": (event, template) ->
@@ -83,6 +90,17 @@ Template.updateHeroForm.events
     event.stopPropagation()
     id = $(event.currentTarget).data("hero")
     Heros.remove(id)
+
+  "change [name=addSlideId]": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+
+    heroId = Session.get 'selectedHeroId'
+    slideId = $(event.currentTarget).val()
+    console.log slideId
+
+    Meteor.call "addSlideToHero", heroId, slideId, (error, result) ->
+      console.log error if error
 
 AutoForm.hooks
   updateHeroForm:
