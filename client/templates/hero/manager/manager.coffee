@@ -82,7 +82,12 @@ Template.updateHeroForm.helpers
         type: String
     });
   media: (id) ->
-    return Media.findOne({'metadata.slideId': id})
+    img = Media.findOne({'metadata.slideId': id})
+    heroSlide = HeroSlides.findOne({_id: id})
+    return {
+            'img': img,
+            'slide': heroSlide
+            }
 
 Template.updateHeroForm.events
   "click .delete-hero": (event, template) ->
