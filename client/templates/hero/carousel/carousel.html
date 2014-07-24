@@ -38,6 +38,7 @@
         <div class="hero-tools">
           <a class="hero-remove-link" data-index="{{_id}}" title="Remove Hero"><i class="remove-hero fa fa-times-circle fa-2x"></i></a>
           <a class="hero-add-slide-link" data-index="{{_id}}" title="Add Slide"><i class="add-hero-slide fa fa-plus-circle fa-2x"></i></a>
+          <a class="hero-edit-slide-link" data-index="{{_id}}" title="Edit Slide"><i class="fa fa-pencil-square fa-2x" data-id=""></i></a>
         </div>
       {{/if}}
   </div>
@@ -45,7 +46,7 @@
 </template>
 
 <template name="heroSlide">
-<div class="container">
+<a href="{{ uri }}">
 
   {{#with image}}
   <div style="background-image: url('{{ url }}');">
@@ -65,10 +66,6 @@
 
     <p class="slide-meta">{{ caption }}</p>
     {{#if userHasRole "admin"}}
-      <div class="slide-edit-link slide-meta">
-        <i class="fa fa-pencil fa-lg" data-id=""></i>
-      </div>
-
       <div class="edit-slide">
       {{#autoForm collection="HeroSlides" doc=. type="update" id="slideEditForm"}}
         {{> afQuickField name="caption"}}
@@ -81,7 +78,7 @@
 
   </div>
 
-</div>
+</a>
 </template>
 
 <template name="heroImageUpload">

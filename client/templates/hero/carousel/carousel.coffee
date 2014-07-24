@@ -18,6 +18,13 @@ Template.herocarousel.events
     Meteor.call "addHeroSlide", template.data.hero._id, slide, (error) ->
       console.log error if error
 
+  "click .hero-edit-slide-link": (event,template) ->
+    event.preventDefault()
+    event.stopPropagation()
+    $('.edit-slide').show()
+    $('.slide-meta, .carousel-indicators').hide()
+    $('.hero').carousel('pause')
+
 Template.herocarousel.slideCount = ->
   return (@.slideIds.length)
 
@@ -32,7 +39,7 @@ Template.herocarousel.created = ->
     $('.carousel .carousel-indicators li:first').addClass('active')
 
     # wire up the carousel
-    $('.carousel').carousel({interval: 2000})
+    $('.carousel').carousel({interval: 5000})
 
     $('.carousel .carousel-indicators li').each (idx, val) ->
       $(this).data("data-slide-to": idx).click ->
@@ -48,13 +55,6 @@ Template.herocarousel.created = ->
       return
 
 Template.heroSlide.events
-  "click .slide-edit-link": (event,template) ->
-    event.preventDefault()
-    event.stopPropagation()
-    $('.edit-slide').show()
-    $('.slide-meta, .carousel-indicators').hide()
-    $('.hero').carousel('pause')
-
   'submit #slideEditForm': () ->
     $('.edit-slide').hide()
     $('.slide-meta, .carousel-indicators').show()
