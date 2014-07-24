@@ -14,13 +14,15 @@
         {{#if slideCount}}
           {{#each slides}}
           <div class="item">
+            {{#if userHasRole "admin"}}
             {{> heroSlide . }}
+            {{ else }}
+            <a href="{{ uri }}">
+              {{> heroSlide . }}
+            </a>
+            {{/if}}
           </div>
           {{/each}}
-        {{else}}
-        <div class="item">
-          {{> heroSlide }}
-        </div>
         {{/if}}
       </div>
 
@@ -46,39 +48,35 @@
 </template>
 
 <template name="heroSlide">
-<a href="{{ uri }}">
-
-  {{#with image}}
-  <div style="background-image: url('{{ url }}');">
-    <img src="{{ url }}" class="img-responsive">
-  </div>
+{{#with image}}
+<div style="background-image: url('{{ url }}');">
+  <img src="{{ url }}" class="img-responsive">
+</div>
+{{else}}
+<div class="missingSlideImage">
+  {{#if userHasRole "admin"}}
+    {{> heroImageUpload heroId=../../_id slideId=_id}}
   {{else}}
-  <div class="missingSlideImage">
-    {{#if userHasRole "admin"}}
-      {{> heroImageUpload heroId=../../_id slideId=_id}}
-    {{else}}
-      <img src="http://placehold.it/1024x150" class="img-responsive">
-    {{/if}}
-  </div>
-  {{/with}}
+    <img src="http://placehold.it/1024x150" class="img-responsive">
+  {{/if}}
+</div>
+{{/with}}
 
-  <div class="carousel-caption">
+<div class="carousel-caption">
 
-    <p class="slide-meta">{{ caption }}</p>
-    {{#if userHasRole "admin"}}
-      <div class="edit-slide">
-      {{#autoForm collection="HeroSlides" doc=. type="update" id="slideEditForm"}}
-        {{> afQuickField name="caption"}}
-        {{> afQuickField name="uri"}}
-        <button type="submit" class="btn btn-primary">Update</button>
-        <button type="cancel" class="btn btn-danger">Cancel</button>
-      {{/autoForm}}
-      </div>
-    {{/if}}
+  <p class="slide-meta">{{ caption }}</p>
+  {{#if userHasRole "admin"}}
+    <div class="edit-slide">
+    {{#autoForm collection="HeroSlides" doc=. type="update" id="slideEditForm"}}
+      {{> afQuickField name="caption"}}
+      {{> afQuickField name="uri"}}
+      <button type="submit" class="btn btn-primary">Update</button>
+      <button type="cancel" class="btn btn-danger">Cancel</button>
+    {{/autoForm}}
+    </div>
+  {{/if}}
 
-  </div>
-
-</a>
+</div>
 </template>
 
 <template name="heroImageUpload">
