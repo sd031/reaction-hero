@@ -17,6 +17,5 @@ Clone to reaction/packages then add package to local meteor server:
 * <strike>Insert the carousel before the product grid</strike>
 * <strike>Update the Add Carousel Button</strike>
 * Scale and fix Hero Slide images on upload
-* Update the Admin UI (its pretty ugly)
-* Figure out why the widget won't show up in the Dashboard App Store
-* Maybe add option to 
+* <strike>Update the Admin UI (its pretty ugly)</strike>
+* <strike>Figure out why the widget won't show up in the Dashboard App Store</strike>

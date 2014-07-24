@@ -9,8 +9,10 @@ Package.on_use(function (api, where) {
     "coffeescript",
     "underscore",
     "simple-schema",
+    "collection2",
     "autoform",
-    "reaction-core"
+    "reaction-core",
+    "collection-helpers"
   ], ["client", "server"]);
 
   // client

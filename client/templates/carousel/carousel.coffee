@@ -6,14 +6,8 @@ Template.herocarousel.events
     Meteor.call "deleteHeroFromPage", template.data.hero._id, Router.current().route.name, (error) ->
       console.log error if error
 
-Template.herocarousel.helpers
-  media: (id) ->
-    if img = Media.findOne({'metadata.slideId': id})
-      return img
-    return false
-
 Template.herocarousel.slideCount = ->
-  return (@.slides.length > 1)
+  return (@.slideIds.length > 1)
 
 Template.herocarousel.created = ->
 

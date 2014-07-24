@@ -10,7 +10,7 @@ Meteor.methods
 
     HeroSlides.remove slideId, (error, result) ->
       unless error
-        Heros.update({slides: slideId}, {$pull:{slides: slideId}}, {multi: true})
+        Heros.update({slideIds: slideId}, {$pull:{slideIds: slideId}}, {multi: true})
 
   ###
   # addHeroToPage
@@ -40,7 +40,7 @@ Meteor.methods
     unless Roles.userIsInRole(Meteor.userId(), ['admin'])
       return false
 
-    Heros.update({_id: heroId}, {$addToSet:{"slides": slideId}})
+    Heros.update({_id: heroId}, {$addToSet:{"slideIds": slideId}})
 
   ###
   # updateHeroSlides
@@ -50,5 +50,5 @@ Meteor.methods
     unless Roles.userIsInRole(Meteor.userId(), ['admin'])
       return false
 
-    Heros.update({_id: heroId}, {$set:{"slides": slides}})
+    Heros.update({_id: heroId}, {$set:{"slideIds": slides}})
 
