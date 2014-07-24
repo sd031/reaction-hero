@@ -12,11 +12,12 @@
           this.unset();
     uri:
       type: String
-      optional: true,
       label: "URI"
-    title:
+      defaultValue: ''
+    caption:
       type: String
-      optional: true
+      label: "caption"
+      defaultValue: ''
     createdAt:
       type: Date
       optional: true
