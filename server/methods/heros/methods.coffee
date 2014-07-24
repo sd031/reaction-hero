@@ -1,54 +1,25 @@
 Meteor.methods
 
   ###
-  # deleteHeroSlide
-  ###
-  deleteHeroSlide: (slideId) ->
-    # only admins can delete hero slides
-    unless Roles.userIsInRole(Meteor.userId(), ['admin'])
-      return false
-
-    HeroSlides.remove slideId, (error, result) ->
-      unless error
-        Heros.update({slideIds: slideId}, {$pull:{slideIds: slideId}}, {multi: true})
-
-  ###
   # addHeroToPage
   ###
-  addHeroToPage: (heroId, page) ->
+  addHeroToPage: (page) ->
     # only admins can add a hero to the page
     unless Roles.userIsInRole(Meteor.userId(), ['admin'])
       return false
 
-    Heros.update({_id: heroId}, {$addToSet:{"placements": page}})
+    Heros.insert {placements: [page]}, (error, result) ->
+      if error
+        console.log error
 
   ###
-  # deleteHeroFromPage
+  #
   ###
-  deleteHeroFromPage: (heroId, page) ->
-    # only admins can remove hero from the page
+  deleteHero: (heroId) ->
     unless Roles.userIsInRole(Meteor.userId(), ['admin'])
       return false
 
-    Heros.update(heroId, {$pull:{"placements": page}})
-
-  ###
-  # addSlideToHero
-  ###
-  addSlideToHero: (heroId, slideId) ->
-    # only admins add slides to hero
-    unless Roles.userIsInRole(Meteor.userId(), ['admin'])
-      return false
-
-    Heros.update({_id: heroId}, {$addToSet:{"slideIds": slideId}})
-
-  ###
-  # updateHeroSlides
-  ###
-  updateHeroSlides: (heroId, slides) ->
-    # only admins add slides to hero
-    unless Roles.userIsInRole(Meteor.userId(), ['admin'])
-      return false
-
-    Heros.update({_id: heroId}, {$set:{"slideIds": slides}})
+    Heros.remove heroId, (error, result) ->
+      if error
+        console.log error
 

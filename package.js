@@ -29,9 +29,17 @@ Package.on_use(function (api, where) {
     "client/subscriptions.coffee",
     "client/routing.coffee",
 
+    "client/templates/addhero/addhero.html",
+    "client/templates/addhero/addhero.coffee",
+    "client/templates/addhero/addhero.less",
+
     "client/templates/hero/manager/manager.html",
     "client/templates/hero/manager/manager.coffee",
     "client/templates/hero/manager/manager.less",
+
+    "client/templates/hero/carousel/carousel.html",
+    "client/templates/hero/carousel/carousel.coffee",
+    "client/templates/hero/carousel/carousel.less",
 
     "client/templates/hero/hero.html",
     "client/templates/hero/hero.coffee",
@@ -40,14 +48,6 @@ Package.on_use(function (api, where) {
     "client/templates/dashboard/widget/widget.html",
     "client/templates/dashboard/widget/widget.coffee",
     "client/templates/dashboard/widget/widget.less",
-
-    "client/templates/addhero/addhero.html",
-    "client/templates/addhero/addhero.coffee",
-    "client/templates/addhero/addhero.less",
-
-    "client/templates/carousel/carousel.html",
-    "client/templates/carousel/carousel.coffee",
-    "client/templates/carousel/carousel.less",
 
   ], ["client"]);
 });

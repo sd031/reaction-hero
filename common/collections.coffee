@@ -10,9 +10,6 @@
         else
           # don't allow updates
           this.unset();
-    name:
-      type: String
-      defaultValue: "New Slide"
     uri:
       type: String
       optional: true,
@@ -59,9 +56,9 @@ HeroSlides.helpers
         else
           # don't allow updates
           this.unset();
-    name:
-      type: String
-      defaultValue: "New Hero"
+    isVisible:
+      type: Boolean
+      defaultValue: false
     createdAt:
       type: Date
       optional: true
@@ -82,15 +79,12 @@ HeroSlides.helpers
         else
           # force the correct value every time we update
           return new Date
-    showChevrons:
-      type: Boolean,
-      defaultValue: false
     placements:
       type: [String]
-      optional: true
+      defaultValue: []
     slideIds:
       type: [String]
-      optional: true
+      defaultValue: []
 
 Heros = @Heros
 

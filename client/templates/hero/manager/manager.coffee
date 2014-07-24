@@ -136,32 +136,3 @@ AutoForm.hooks
   selectSlide:
     onSubmit: ->
       return false
-
-Template.heroImageUpload.events
-  "click #btn-upload": (event,template) ->
-    template.$("#files").click()
-
-  "change #files, dropped #dropzone": (event, template) ->
-    selectedHeroSlideId = Session.get "selectedHeroSlideId"
-    return unless selectedHeroSlideId
-    FS.Utility.eachFile event, (file, selectedHeroIdx, slideIdx) ->
-      fileObj = new FS.File(file)
-      fileObj.metadata =
-        ownerId: Meteor.userId()
-        slideId: selectedHeroSlideId
-        shopId: Meteor.app.shopId
-      Media.insert fileObj
-
-updateSortable = ->
-  heroId = Session.get 'selectedHeroId'
-  $slides = $(".heroSlides")
-  $slides.sortable update: (el) ->
-
-    sortedSlides = _.map($slides.sortable("toArray",
-      attribute: "data-idx"
-    ), (idx) ->
-      return idx
-    )
-
-    Meteor.call "updateHeroSlides", heroId, sortedSlides, (error) ->
-      console.log error if error
