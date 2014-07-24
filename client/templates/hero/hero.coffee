@@ -8,6 +8,7 @@ Router.onAfterAction ->
       }), $("#main .container-fluid")[0], $("#layout-alerts")[0]
   else
     $("#main .container-fluid .carousel, .carousel.hero, #addhero").remove()
+    #TODO - template method to determin if admin user and check to make sure not in 'blacklisted' area
     if Roles.userIsInRole(Meteor.userId(), ['admin']) && (Router.current().route.originalPath.match('\/dashboard\/?') == null)
       UI.insert UI.render(Template.heroadd), $("#main .container-fluid")[0], $("#layout-alerts")[0]
 
