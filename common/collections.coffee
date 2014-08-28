@@ -10,16 +10,14 @@
         else
           # don't allow updates
           this.unset();
-    name:
-      type: String
-      defaultValue: "New Slide"
     uri:
       type: String
-      optional: true,
       label: "URI"
-    title:
+      defaultValue: ''
+    caption:
       type: String
-      optional: true
+      label: "caption"
+      defaultValue: ''
     createdAt:
       type: Date
       optional: true
@@ -43,6 +41,10 @@
 
 HeroSlides = @HeroSlides
 
+HeroSlides.helpers
+  image: ->
+    ReactionCore.Collections.Media.findOne 'metadata.slideId': this._id
+
 @Heros = new Meteor.Collection 'Heros',
   schema:
     shopId:
@@ -55,9 +57,9 @@ HeroSlides = @HeroSlides
         else
           # don't allow updates
           this.unset();
-    name:
-      type: String
-      defaultValue: "New Hero"
+    isVisible:
+      type: Boolean
+      defaultValue: false
     createdAt:
       type: Date
       optional: true
@@ -78,14 +80,16 @@ HeroSlides = @HeroSlides
         else
           # force the correct value every time we update
           return new Date
-    showChevrons:
-      type: Boolean,
-      defaultValue: false
     placements:
       type: [String]
-      optional: true
-    slides:
+      defaultValue: []
+    slideIds:
       type: [String]
-      optional: true
+      defaultValue: []
 
 Heros = @Heros
+
+Heros.helpers
+  slides: ->
+    return _.map this.slideIds, (id) ->
+      return HeroSlides.findOne id

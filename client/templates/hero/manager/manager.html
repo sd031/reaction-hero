@@ -13,7 +13,7 @@
     {{/autoForm}}
     {{/if}}
     
-    {{#with selectedHeroSlide}}
+    {{#with selectedHeroSlide }}
       {{> updateSlideForm}}
     {{/with}}
 
@@ -40,11 +40,52 @@
 <div class="well">
   {{#autoForm collection="Heros" doc=. type="update" id="heroEditForm"}}
     {{> afQuickField name="name"}}
-    {{> afQuickField name="showChevrons"}}
-    {{> afQuickField name="slides" options=selectSlideOptions noselect=true}}
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Update</button>
       <button type="button" class="btn btn-danger delete-hero" data-hero="{{../_id}}">Delete</button>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Slide List (Drag to Reorder)</label>
+    </div>
+    <div class="form-group">
+    {{#with addSlideOptions}}
+      <select class="form-control slide-select">
+        <option value="">(Select a Slide to Add)</option>
+        {{#each .}}
+        <option value="{{this._id}}" selected={{slideIsSelected}}>{{this.name}}</option>
+        {{/each}}
+      </select>
+      <button class="btn btn-primary add-slide">Add</button>
+    {{else}}
+      <p>You must define some slides before you can add them to a hero carousel.</p>
+    {{/with}}
+    </div>
+    <div class="form-group">
+      {{#with slides}}
+      <ul class="heroSlides list-unstyled">
+        {{#each .}}
+          <li class="panel panel-info" data-idx="{{_id}}">
+              <div class="panel-heading">
+                {{name}}
+                <a class="slide-remove-from-hero-link pull-right"><i class="fa fa-times-circle fa-2x"></i></a>
+              </div>
+              <div class="panel-body">
+                {{#with image}}
+                <span class="pull-left">
+                  <img class="media-object slide-thumb" src="{{url}}" alt="">
+                </span>
+                {{/with}}
+                <div class="media-body">
+                  <p><strong>Title:</strong> {{#with title}}{{.}}{{else}}<em>None</em>{{/with}}</p>
+                  <p><strong>URL:</strong> {{#with url}}{{.}}{{else}}<em>None</em>{{/with}}</p>
+                </div>
+              </div>
+          </li>
+        {{/each}}
+      </ul>
+      {{else}}
+      <p><em>Add some slides</em></p>
+      {{/with}}
     </div>
   {{/autoForm}}
 </div>
@@ -55,7 +96,7 @@
     {{#autoForm collection="HeroSlides" doc=. type="update" id="slideEditForm"}}
     <div class="media">
       <div class="pull-left">
-        {{#with media}}
+        {{#with image}}
           <div class="center-cropped" style="background-image: url('{{url}}');">
             <img src="{{url}}" class="product-grid-item-images img-responsive">
             <div class="slide-tools">
@@ -82,11 +123,4 @@
     </div>
     {{/autoForm}}
   </div>  
-</template>
-
-<template name="heroImageUpload">
-<div id="dropzone" class="dropzone">
-    <input name="files" id="files" class="hidden" type="file" multiple/>
-    <div class="btn btn-default select-file" id="btn-upload">Drop file to Upload</div>
-</div>
 </template>

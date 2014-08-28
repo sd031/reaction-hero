@@ -1,11 +1,7 @@
 Template.heroManager.helpers
-  heros: ->
-    return Heros.find()
-  slides: ->
-    return HeroSlides.find()
   selectSlideSchema: ->
     return new SimpleSchema({
-      selectedSlideId: 
+      selectedSlideId:
         type: String
     });
   selectSlideOptions: ->
@@ -16,7 +12,7 @@ Template.heroManager.helpers
     return HeroSlides.findOne(id)
   selectHeroSchema: ->
     return new SimpleSchema({
-      selectedHeroId: 
+      selectedHeroId:
         type: String
     });
   selectHeroOptions: ->
@@ -55,10 +51,6 @@ Template.heroManager.events
     event.stopPropagation()
     Session.set 'selectedHeroId', $(event.currentTarget).val()
 
-Template.updateSlideForm.helpers
-  media: ->
-    return Media.findOne({'metadata.slideId': this._id})
-
 Template.updateSlideForm.events
   "click .delete-slide": (event, template) ->
     event.preventDefault()
@@ -73,9 +65,10 @@ Template.updateSlideForm.events
     @remove()
 
 Template.updateHeroForm.helpers
-  selectSlideOptions: ->
-    return HeroSlides.find({}, {sort: {name: 1}}).map (slide) ->
-      return { label: slide.name, value: slide._id }
+  addSlideOptions: ->
+    return HeroSlides.find({}, {sort: {name: 1}})
+  slideIsSelected: ->
+    return Session.equals "selectedSlideIdForHeroAdd", this._id
 
 Template.updateHeroForm.events
   "click .delete-hero": (event, template) ->
@@ -83,6 +76,49 @@ Template.updateHeroForm.events
     event.stopPropagation()
     id = $(event.currentTarget).data("hero")
     Heros.remove(id)
+    return
+
+  "click .add-slide": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+
+    heroId = Session.get 'selectedHeroId'
+    slideId = Session.get "selectedSlideIdForHeroAdd"
+
+    return unless heroId and slideId
+
+    Meteor.call "addSlideToHero", heroId, slideId, (error, result) ->
+      if error
+        console.log error
+      else
+        Deps.flush()
+        updateSortable()
+
+    return
+
+  "change .slide-select": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+
+    Session.set "selectedSlideIdForHeroAdd", $(event.currentTarget).val()
+    return
+
+  "click .slide-remove-from-hero-link": (event, template) ->
+    event.preventDefault()
+    event.stopPropagation()
+
+    heroId = Session.get 'selectedHeroId'
+    slideId = this._id
+
+    return unless heroId and slideId
+
+    Heros.update heroId,
+      $pull:
+        slideIds: slideId
+    return
+
+Template.updateHeroForm.rendered = ->
+  updateSortable()
 
 AutoForm.hooks
   updateHeroForm:
@@ -100,18 +136,3 @@ AutoForm.hooks
   selectSlide:
     onSubmit: ->
       return false
-
-Template.heroImageUpload.events
-  "click #btn-upload": (event,template) ->
-    template.$("#files").click()
-
-  "change #files, dropped #dropzone": (event, template) ->
-    selectedHeroSlideId = Session.get "selectedHeroSlideId"
-    return unless selectedHeroSlideId
-    FS.Utility.eachFile event, (file, selectedHeroIdx, slideIdx) ->
-      fileObj = new FS.File(file)
-      fileObj.metadata =
-        ownerId: Meteor.userId()
-        slideId: selectedHeroSlideId
-        shopId: Meteor.app.shopId
-      Media.insert fileObj

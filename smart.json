@@ -5,5 +5,7 @@
   "author": "andy@arroyolabs.com (http://arroyolabs.com)",
   "version": "0.0.1",
   "git": "",
-  "packages": {}
+  "packages": {
+  	"collection-helpers": {}
+  }
 }
