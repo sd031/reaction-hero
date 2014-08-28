@@ -43,7 +43,7 @@ HeroSlides = @HeroSlides
 
 HeroSlides.helpers
   image: ->
-    Media.findOne 'metadata.slideId': this._id
+    ReactionCore.Collections.Media.findOne 'metadata.slideId': this._id
 
 @Heros = new Meteor.Collection 'Heros',
   schema:

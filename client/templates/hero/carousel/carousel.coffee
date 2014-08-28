@@ -73,4 +73,4 @@ Template.heroImageUpload.events
         ownerId: Meteor.userId()
         slideId: template.data.slideId
         shopId: Meteor.app.shopId
-      Media.insert fileObj
+      ReactionCore.Collections.Media.insert fileObj

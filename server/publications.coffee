@@ -1,5 +1,5 @@
 Meteor.publish "Heros", ->
-  shopId = Meteor.app.getShopId(this)
+  shopId = ReactionCore.getShopId(this)
   if shopId
     Heros.find
       shopId: shopId
@@ -7,7 +7,7 @@ Meteor.publish "Heros", ->
     []
 
 Meteor.publish "HeroSlides", ->
-  shopId = Meteor.app.getShopId(this)
+  shopId = ReactionCore.getShopId(this)
   if shopId
     HeroSlides.find
       shopId: shopId
