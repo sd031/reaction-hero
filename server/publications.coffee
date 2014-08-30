@@ -1,16 +1,19 @@
+Heros = ReactionCore.Collections.Heros
+HeroSlides = ReactionCore.Collections.HeroSlides
+
 Meteor.publish "Heros", ->
   shopId = ReactionCore.getShopId(this)
   if shopId
-    Heros.find
-      shopId: shopId
+    return Heros.find
+            shopId: shopId
   else
     []
 
 Meteor.publish "HeroSlides", ->
   shopId = ReactionCore.getShopId(this)
   if shopId
-    HeroSlides.find
-      shopId: shopId
+    return HeroSlides.find
+            shopId: shopId
   else
     []
 

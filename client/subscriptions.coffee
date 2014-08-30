@@ -1,2 +1,2 @@
-Meteor.subscribe "Heros"
-Meteor.subscribe "HeroSlides"
+ReactionCore.Subscriptions.Heros = Meteor.subscribe "Heros"
+ReactionCore.Subscriptions.HeroSlides = Meteor.subscribe "HeroSlides"
