@@ -3,7 +3,7 @@ Template.heroManager.helpers
     return new SimpleSchema({
       selectedSlideId:
         type: String
-    });
+    })
   selectSlideOptions: ->
     return HeroSlides.find({}, {sort: {name: 1}}).map (slide) ->
       return { label: slide.name, value: slide._id }
@@ -14,7 +14,7 @@ Template.heroManager.helpers
     return new SimpleSchema({
       selectedHeroId:
         type: String
-    });
+    })
   selectHeroOptions: ->
     return Heros.find({}, {sort: {name: 1}}).map (hero) ->
       return { label: hero.name, value: hero._id }

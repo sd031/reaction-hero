@@ -12,22 +12,32 @@
     position:absolute;
     top:-15px;
     left:-15px;
+
+    /* Update/Replace this */
+    .hero-edit {
+      display:block;
+      height:15px;
+      width:15px;
+    }
+
+    .hero-tools-menu {
+      background-color:rgba(255,255,255,.8);
+    }
   }
 
   .missingSlideImage {
-    height:150px;
-    width:1024px;
+    height:100%;
+    width:100%;
     background-image: url(http://placehold.it/1024x150);
+    background-size:cover;
   }
   
   .edit-slide {
     display:none;
-    position:relative;
-    top:25px;
-    width:375px;
-    margin:0px auto;
+    position:absolute;
+    width:100%;
 
-    #slideEditForm {
+    .slideEditForm {
       
       .form-group {
         clear:both;
@@ -55,4 +65,60 @@
     }
   }
 
+  .carousel-inner {
+    
+    .item {
+      
+      div {
+        z-index:2;
+        background-size:cover;
+
+        img {
+          z-index:-1;
+        }
+      }
+    
+    }
+
+  }
+
+}
+
+.hero-slides-edit {
+
+  position:absolute;
+  z-index:999;
+
+  background-color:rgba(0,0,0,.4);
+  width:100%;
+  height:100%;
+
+  ul {
+    list-style:none;
+    padding:0px;
+    margin:0px 10px;
+
+    li.slide {
+      float:left;
+      width:150px;
+      margin-right:10px;
+    }
+  }
+}
+
+.slide-remove-link {
+  top:5px;
+  position:absolute;
+  z-index:99;
+
+  i {
+    color:red;
+  }
+}
+
+.slide-edit-link {
+  top:5px;
+  margin-left:30px;
+  position:absolute;
+  z-index:99;
 }

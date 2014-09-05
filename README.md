@@ -11,12 +11,11 @@ Clone to reaction/packages then add package to local meteor server:
 
 # TODOs
 
-* Move collections into ReactionCore
-* CSS Fixes
-  * Background Image scaling
-  * Directional tabs overlap the upload button
-  * Make this look, better
-* Ability to delete individual slides
-* Ability to reorder slides using inline UI
-* Background Images Optional
-* Remove cruft/old files
+* <strike>Update Hero Slides using the Admin</strike>
+* <strike>Create a preview Bootstrap Carousel to display the Hero Slides</strike>
+* <strike>Figure out how to inject the slideshow into a template</strike>
+* <strike>Insert the carousel before the product grid</strike>
+* <strike>Update the Add Carousel Button</strike>
+* Scale and fix Hero Slide images on upload
+* <strike>Update the Admin UI (its pretty ugly)</strike>
+* <strike>Figure out why the widget won't show up in the Dashboard App Store</strike>
