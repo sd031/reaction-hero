@@ -11,11 +11,11 @@ Clone to reaction/packages then add package to local meteor server:
 
 # TODOs
 
-* <strike>Update Hero Slides using the Admin</strike>
-* <strike>Create a preview Bootstrap Carousel to display the Hero Slides</strike>
-* <strike>Figure out how to inject the slideshow into a template</strike>
-* <strike>Insert the carousel before the product grid</strike>
-* <strike>Update the Add Carousel Button</strike>
-* Scale and fix Hero Slide images on upload
-* <strike>Update the Admin UI (its pretty ugly)</strike>
-* <strike>Figure out why the widget won't show up in the Dashboard App Store</strike>
+* Update/Delete Slide BG Image
+  * Cannot replace an image, yet. 
+* Style Edit Slides UX 
+  * Edit form needs a clearer bg
+* Allow user to add some styling to the caption
+* Find a better way to inject hero slideshow into a page
+  * Look into using [meteor-template-extension](https://github.com/aldeed/meteor-template-extension)
+* Allow for > 1 slideshows to appear on a page
